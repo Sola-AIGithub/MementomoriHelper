@@ -1,0 +1,484 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="AutoBossErrorMessage" xml:space="preserve">
+        <value>エラーが {0} 回達成され、中断</value>
+    </data>
+    <data name="AutoBossExecMessage" xml:space="preserve">
+        <value>{0} ボスに挑戦 1 回：{1}、合計回数：{2}、勝利回数：{3}、エラー：{4}</value>
+    </data>
+    <data name="AutoLegendInheritance" xml:space="preserve">
+        <value>聖なる装備を自動的にD級に引き継ぐ</value>
+    </data>
+    <data name="AutoMatchlessInheritance" xml:space="preserve">
+        <value>SABCを自動的に精錬し、D級に魔法装備を引き継ぐ</value>
+    </data>
+    <data name="AutoTowerElementExecMsg" xml:space="preserve">
+        <value>{0} {1} 層に挑戦 1 回：{2}、{6}/10、合計回数：{3}、勝利回数：{4}、エラー：{5}</value>
+    </data>
+    <data name="AutoTowerInfiniteExecMsg" xml:space="preserve">
+        <value>{0} {1}層に挑戦 1 回：{2}、合計回数：{3}、勝利回数：{4}、エラー：{5}</value>
+    </data>
+    <data name="BattleResult" xml:space="preserve">
+        <value>戦闘結果</value>
+    </data>
+    <data name="CaveBuyItemSuccess" xml:space="preserve">
+        <value>{0}×{1} の購入に成功</value>
+    </data>
+    <data name="CaveCurrentState" xml:space="preserve">
+        <value>現在、{0} 層、座標 {1},{2}、ステータス {3}、{4}、敵の戦闘力 {5}</value>
+    </data>
+    <data name="CaveErrorRelicExist" xml:space="preserve">
+        <value>次を選択</value>
+    </data>
+    <data name="CaveErrorSelectSupport" xml:space="preserve">
+        <value>サポートの選択時にエラーが発生しました、{0}、次のサポートを選択し続けます</value>
+    </data>
+    <data name="CharacterInfo" xml:space="preserve">
+        <value>キャラクター情報</value>
+    </data>
+    <data name="DesignatedTargetProp" xml:space="preserve">
+        <value>ターゲットアイテムを指定</value>
+    </data>
+    <data name="Dispatched" xml:space="preserve">
+        <value>派遣済み</value>
+    </data>
+    <data name="DispatchingAll" xml:space="preserve">
+        <value>指定されたターゲットアイテムがないか、強制派遣が設定され、すべてのタスクが派遣されています</value>
+    </data>
+    <data name="DispatchingTargetPropMission" xml:space="preserve">
+        <value>ターゲットアイテムタスクを派遣中</value>
+    </data>
+    <data name="Enter" xml:space="preserve">
+        <value>入る</value>
+    </data>
+    <data name="ExecuteAllQuick" xml:space="preserve">
+        <value>一括実行</value>
+    </data>
+    <data name="ExecutionOutput" xml:space="preserve">
+        <value>実行出力</value>
+    </data>
+    <data name="FindEquipmentCharacter" xml:space="preserve">
+        <value>装備を着用可能なキャラクターを探し、1回外す</value>
+    </data>
+    <data name="Finished" xml:space="preserve">
+        <value>完了済み</value>
+    </data>
+    <data name="ForceDispatch" xml:space="preserve">
+        <value>強制派遣</value>
+    </data>
+    <data name="GachaExecInfo" xml:space="preserve">
+        <value>ガチャ {0} {1} 回、消費 {2}×{3}</value>
+    </data>
+    <data name="GachaResult" xml:space="preserve">
+        <value>ガチャ結果</value>
+    </data>
+    <data name="GameAssistant" xml:space="preserve">
+        <value>ゲームアシスタント</value>
+    </data>
+    <data name="ItemLimitCount" xml:space="preserve">
+        <value>保持上限</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>ログイン</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>名前</value>
+    </data>
+    <data name="NoAvailable" xml:space="preserve">
+        <value>{0} は利用できません</value>
+    </data>
+    <data name="NoAvailableGacha" xml:space="preserve">
+        <value>実行できるガチャはもうありません</value>
+    </data>
+    <data name="NoInheritableDRarityEquip" xml:space="preserve">
+        <value>D級の引き継ぎ可能な装備が見つかりません</value>
+    </data>
+    <data name="NoLegendEquip" xml:space="preserve">
+        <value>聖なる装備はありません</value>
+    </data>
+    <data name="NothingToReceive" xml:space="preserve">
+        <value>受け取れるものはありません</value>
+    </data>
+    <data name="NothingToSmelt" xml:space="preserve">
+        <value>精錬可能な装備がもうありません</value>
+    </data>
+    <data name="NotReceived" xml:space="preserve">
+        <value>受け取り待ち</value>
+    </data>
+    <data name="NotSelected" xml:space="preserve">
+        <value>選択されていません</value>
+    </data>
+    <data name="NotStarted" xml:space="preserve">
+        <value>未開始</value>
+    </data>
+    <data name="NotUnlocked" xml:space="preserve">
+        <value>未解除</value>
+    </data>
+    <data name="OnGoing" xml:space="preserve">
+        <value>進行中</value>
+    </data>
+    <data name="PleaseLogin" xml:space="preserve">
+        <value>アシスタントを使用する前にログインしてください</value>
+    </data>
+    <data name="PutOnEquipmentOfCharacter" xml:space="preserve">
+        <value>{0} Lv{1} の装備を着用</value>
+    </data>
+    <data name="QuickActions" xml:space="preserve">
+        <value>クイックアクション</value>
+    </data>
+    <data name="Received" xml:space="preserve">
+        <value>受け取り済み</value>
+    </data>
+    <data name="ReinforceEquipmentOnce" xml:space="preserve">
+        <value>装備を1回強化</value>
+    </data>
+    <data name="RemoveEquipmentOfCharacter" xml:space="preserve">
+        <value>{0} Lv{1} の装備を外す</value>
+    </data>
+    <data name="RewardMissionMsg" xml:space="preserve">
+        <value>{0} の {1} の報酬を受け取る</value>
+    </data>
+    <data name="RewardMissonActivity" xml:space="preserve">
+        <value>メダルの報酬</value>
+    </data>
+    <data name="Selected" xml:space="preserve">
+        <value>選択済み</value>
+    </data>
+    <data name="SelectPlayer" xml:space="preserve">
+        <value>キャラクターを選択</value>
+    </data>
+    <data name="Slot" xml:space="preserve">
+        <value>スロット</value>
+    </data>
+    <data name="Success" xml:space="preserve">
+        <value>成功</value>
+    </data>
+    <data name="Sync" xml:space="preserve">
+        <value>同期</value>
+    </data>
+    <data name="SyncUserInfo" xml:space="preserve">
+        <value>ユーザー情報を同期</value>
+    </data>
+    <data name="TargetValue" xml:space="preserve">
+        <value>目標値</value>
+    </data>
+    <data name="TowerType" xml:space="preserve">
+        <value>タワータイプ</value>
+    </data>
+    <data name="Unknown" xml:space="preserve">
+        <value>未知</value>
+    </data>
+    <data name="UseNormalItems" xml:space="preserve">
+        <value>固定アイテムを使用</value>
+    </data>
+    <data name="UseOverLimitItem" xml:space="preserve">
+        <value>上限に達したアイテムを使用</value>
+    </data>
+    <data name="AutoJobSwitchs" xml:space="preserve">
+    <value>オートジョブスイッチ</value>
+</data>
+    <data name="AutoJobCrons" xml:space="preserve">
+    <value>オートジョブクロン</value>
+</data>
+    <data name="DisableAllJobs" xml:space="preserve">
+    <value>すべてのジョブを無効にする</value>
+</data>
+    <data name="AutoGacha" xml:space="preserve">
+    <value>オートガチャ</value>
+</data>
+    <data name="DailyJobCronExpression" xml:space="preserve">
+    <value>デイリージョブクロン式</value>
+</data>
+    <data name="RewardClaimJobCronExpression" xml:space="preserve">
+    <value>報酬クレームジョブクロン式</value>
+</data>
+    <data name="CronExpression" xml:space="preserve">
+    <value>クロン式</value>
+</data>
+    <data name="AutoGachaConsumeItems" xml:space="preserve">
+    <value>オートガチャ消費アイテム</value>
+</data>
+    <data name="BountyQuestTargetItems" xml:space="preserve">
+        <value>以下の報酬が利用可能なときに自動的にタスクをディスパッチ</value>
+    </data>
+    <data name="DungeonBattleTargetItems" xml:space="preserve">
+        <value>自動購入が必要な店舗のアイテム</value>
+    </data>
+    <data name="Others" xml:space="preserve">
+    <value>その他</value>
+</data>
+    <data name="SelectedXItems" xml:space="preserve">
+        <value>{0} 個のアイテムを選択</value>
+    </data>
+    <data name="AutoRequestDelay" xml:space="preserve">
+        <value>自動リクエスト遅延</value>
+    </data>
+    <data name="PreferTreasureChest" xml:space="preserve">
+        <value>宝箱ノードを優先選択</value>
+    </data>
+    <data name="MaxUseRecoveryItem" xml:space="preserve">
+        <value>回復アイテムの最大使用数量（0は使用しないことを意味します）</value>
+    </data>
+    <data name="DiscountPercentageforProducts" xml:space="preserve">
+        <value>商品の割引率</value>
+    </data>
+    <data name="DailyJob" xml:space="preserve">
+        <value>デイリージョブ</value>
+    </data>
+    <data name="RewardClaimJob" xml:space="preserve">
+        <value>報酬クレームジョブ</value>
+    </data>
+    <data name="NextExecutionTime" xml:space="preserve">
+        <value>次回実行時間</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>追加</value>
+    </data>
+    <data name="ShopAutoBuyItems" xml:space="preserve">
+        <value>自動購入ストアアイテム</value>
+    </data>
+    <data name="AutoBuy" xml:space="preserve">
+        <value>自動購入</value>
+    </data>
+    <data name="ConsumeItem" xml:space="preserve">
+        <value>消費アイテム</value>
+    </data>
+    <data name="ShopAutoBuyPleaseSelectOne" xml:space="preserve">
+        <value>少なくとも1つ指定してください: ストアアイテムまたは消耗アイテム</value>
+    </data>
+    <data name="AnyItems" xml:space="preserve">
+        <value>任意のアイテム</value>
+    </data>
+    <data name="BuyWith" xml:space="preserve">
+        <value>{0} で {1} を購入</value>
+    </data>
+    <data name="ResettoDefault" xml:space="preserve">
+        <value>デフォルトにリセット</value>
+    </data>
+    <data name="AutoLoginonStartup" xml:space="preserve">
+        <value>起動時の自動ログイン</value>
+    </data>
+    <data name="StopAfterSpecifiedStage" xml:space="preserve">
+        <value>指定ステージ後に停止</value>
+    </data>
+    <data name="NoStop" xml:space="preserve">
+        <value>停止せず</value>
+    </data>
+    <data name="MainAccount" xml:space="preserve">
+        <value>メインアカウント</value>
+    </data>
+    <data name="SwitchAccount" xml:space="preserve">
+        <value>アカウント切り替え</value>
+    </data>
+    <data name="AccountManagement" xml:space="preserve">
+        <value>アカウント管理</value>
+    </data>
+    <data name="NotLoggedIn" xml:space="preserve">
+        <value>ログインしていません</value>
+    </data>
+    <data name="LoggedIn" xml:space="preserve">
+        <value>ログイン済み</value>
+    </data>
+    <data name="AutoLogin" xml:space="preserve">
+        <value>自動ログイン</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>設定</value>
+    </data>
+    <data name="Exit" xml:space="preserve">
+        <value>退出</value>
+    </data>
+    <data name="Account" xml:space="preserve">
+        <value>アカウント</value>
+    </data>
+    <data name="Password" xml:space="preserve">
+        <value>パスワード</value>
+    </data>
+    <data name="Failed to retrieve account information" xml:space="preserve">
+        <value>アカウント情報の取得に失敗しました</value>
+    </data>
+    <data name="Login successful" xml:space="preserve">
+        <value>ログイン成功</value>
+    </data>
+    <data name="Logout successful" xml:space="preserve">
+        <value>ログアウト成功</value>
+    </data>
+    <data name="Save successful" xml:space="preserve">
+        <value>保存成功</value>
+    </data>
+    <data name="Downloading master directory..." xml:space="preserve">
+        <value>マスターディレクトリのダウンロード中...</value>
+    </data>
+    <data name="Download master directory completed" xml:space="preserve">
+        <value>マスターディレクトリのダウンロードが完了しました</value>
+    </data>
+    <data name="Login expired, please log in again" xml:space="preserve">
+        <value>ログインの有効期限が切れました。もう一度ログインしてください</value>
+    </data>
+    <data name="Login failed, please check your account configuration" xml:space="preserve">
+        <value>ログインに失敗しました。アカウントの設定を確認してください</value>
+    </data>
+    <data name="Operation" xml:space="preserve">
+        <value>操作</value>
+    </data>
+    <data name="Request timed out, check your network" xml:space="preserve">
+        <value>リクエストがタイムアウトしました。ネットワークを確認してください</value>
+    </data>
+    <data name="No available support characters found." xml:space="preserve">
+        <value>利用可能なサポートキャラクターが見つかりません。</value>
+    </data>
+    <data name="Select tasks based on reward quantity and weight" xml:space="preserve">
+        <value>報酬量と重みに基づいてタスクを選択します</value>
+    </data>
+    <data name="You can download the battle log and parse it here" xml:space="preserve">
+        <value>戦闘ログをダウンロードして、ここで解析できます</value>
+    </data>
+    <data name="No deployable castles available" xml:space="preserve">
+        <value>配置可能な城がありません</value>
+    </data>
+    <data name="Successfully deployed" xml:space="preserve">
+        <value>{0} で {1} を正常に展開しました</value>
+    </data>
+    <data name="Deploy defense" xml:space="preserve">
+        <value>防衛を展開</value>
+    </data>
+    <data name="Account Creation Time" xml:space="preserve">
+        <value>アカウント作成時間</value>
+    </data>
+    <data name="Opponent Selection Strategy" xml:space="preserve">
+        <value>相手選択戦略</value>
+    </data>
+    <data name="Random" xml:space="preserve">
+        <value>ランダム</value>
+    </data>
+    <data name="Min Battle Power" xml:space="preserve">
+        <value>最低戦力</value>
+    </data>
+    <data name="Max Battle Power" xml:space="preserve">
+        <value>最大戦力</value>
+    </data>
+    <data name="Character Filter" xml:space="preserve">
+        <value>キャラクターフィルター</value>
+    </data>
+    <data name="Exclude {0}" xml:space="preserve">
+        <value>除外 {0}</value>
+    </data>
+    <data name="Exclude {battleParameterName} higher than {characterName}" xml:space="preserve">
+        <value>{0} が {1} よりも高いものを除外する</value>
+    </data>
+    <data name="Exclude character" xml:space="preserve">
+        <value>キャラクターを除外する</value>
+    </data>
+    <data name="Exclude enemy character with higher stats in the same attribute as ours" xml:space="preserve">
+        <value>敵キャラクターのステータスが、同じ属性で自分たちよりも高い場合は除外します</value>
+    </data>
+    <data name="Filtering strategy" xml:space="preserve">
+        <value>フィルタリング戦略</value>
+    </data>
+    <data name="Confirm removal of this account?" xml:space="preserve">
+        <value>このアカウントを削除しますか？</value>
+    </data>
+    <data name="AutoUseItemTypeOthers" xml:space="preserve"><value>Others</value></data>
+    <data name="AutoUseItemTypeDiamondBag" xml:space="preserve"><value>ダイヤの袋</value></data>
+    <data name="AutoUseItemTypeMysteryRune" xml:space="preserve"><value>未鑑定ルーン</value></data>
+    <data name="AutoUseItemTypeWitchLetterR" xml:space="preserve"><value>魔女の手紙(R)</value></data>
+    <data name="AutoUseItemTypeWitchLetterSr" xml:space="preserve"><value>魔女の手紙(SR)</value></data>
+    <data name="AutoUseItemTypeWitchShard" xml:space="preserve"><value>魔女の心片</value></data>
+    <data name="AutoUseItemTypePot" xml:space="preserve"><value>壺</value></data>
+    <data name="AutoUseItemTypeAmphora" xml:space="preserve"><value>大壺</value></data>
+    <data name="AutoUseItemTypeSealedChest" xml:space="preserve"><value>封印の宝箱</value></data>
+    <data name="AutoUseItemTypeWitchLetterGift" xml:space="preserve"><value>魔女の手紙ギフト</value></data>
+    <data name="AutoUseItemTypeChestOfChance" xml:space="preserve"><value>運命の箱</value></data>
+    <data name="BattleLogCleanRange" xml:space="preserve"><value>クリーン範囲</value></data>
+    <data name="BattleLogCleanConfirm" xml:space="preserve"><value>{0}個のログファイルをクリーンしますか？(合計{1})</value></data>
+    <data name="BattleLogNoFilesToClean" xml:space="preserve"><value>クリーンするログファイルがありません</value></data>
+    <data name="BattleLogCleanComplete" xml:space="preserve"><value>{0}個のログファイルをクリーンしました</value></data>
+    <data name="BattleLogCleanError" xml:space="preserve"><value>ファイル{0}の削除に失敗しました: {1}</value></data>
+    <data name="BattleLogCleanOption1Day" xml:space="preserve"><value>1日前</value></data>
+    <data name="BattleLogCleanOption1Week" xml:space="preserve"><value>1週間前</value></data>
+    <data name="BattleLogCleanOption1Month" xml:space="preserve"><value>1ヶ月前</value></data>
+    <data name="BattleLogCleanOptionAll" xml:space="preserve"><value>すべて</value></data>
+    <data name="The current version ({0}) is not the latest version ({1}). Click to download the latest version." xml:space="preserve">
+        <value>現在のバージョン（{0}）は最新バージョン（{1}）ではありません。最新バージョンをダウンロードするにはクリックしてください。</value>
+    </data>
+    <data name="Exclude player IDs (comma-separated)" xml:space="preserve">
+        <value>プレイヤーIDを除外（コンマで区切る）</value>
+    </data>
+    <data name="Seconds of pre-battle wait time" xml:space="preserve">
+        <value>バトル前の待機秒数</value>
+    </data>
+    <data name="Auto draw 10 times (up to 3 draws)" xml:space="preserve">
+        <value>自動で10回引く（最大3回）</value>
+    </data>
+    <data name="Automatically select this world when auto logging in" xml:space="preserve">
+        <value>自動ログイン時、このワールドを自動選択します</value>
+    </data>
+    <data name="Remove friends inactive for 7 days" xml:space="preserve">
+        <value>7日間ログインしていない友達を自動削除</value>
+    </data>
+    <data name="Auto accept friend requests" xml:space="preserve">
+        <value>友達申請を自動的に承認する</value>
+    </data>
+    <data name="Auto send friend requests" xml:space="preserve">
+        <value>自動で友達申請を送信する</value>
+    </data>
+    <data name="Auto remove whitelist" xml:space="preserve">
+        <value>自動削除ホワイトリスト</value>
+    </data>
+    <data name="Auto challenge retry count" xml:space="preserve">
+        <value>自動挑戦リトライ回数</value>
+    </data>
+    <data name="Auto unequip gear during events" xml:space="preserve">
+        <value>イベント時に装備を自動解除</value>
+    </data>
+    <data name="Set to 0 for any amount" xml:space="preserve">
+        <value>0に設定すると任意の量になります</value>
+    </data>
+    <data name="Amount consumed" xml:space="preserve">
+        <value>消費量</value>
+    </data>
+    <data name="Any amount" xml:space="preserve">
+        <value>任意の数量</value>
+    </data>
+    <data name="No setting means buying any item" xml:space="preserve">
+        <value>設定なしは任意のアイテムを購入</value>
+    </data>
+    <data name="No setting means using any item for purchase" xml:space="preserve">
+        <value>設定なしは任意のアイテムで購入</value>
+    </data>
+    <data name="The expected diamond value of the current task is now below 20, do not refresh, dispatch directly." xml:space="preserve">
+        <value>現在のタスクのダイヤの期待値が20未満になったため、リフレッシュせずに直接派遣します。</value>
+    </data>
+    <data name="Refresh limit reached, dispatch directly" xml:space="preserve">
+        <value>リフレッシュ回数が上限に達したため、直接派遣します。</value>
+    </data>
+    <data name="Auto refresh diamonds" xml:space="preserve">
+        <value>ダイヤを自動でリフレッシュ。</value>
+    </data>
+    <data name="Max refresh count" xml:space="preserve">
+        <value>最大リフレッシュ回数。</value>
+    </data>
+    <data name="Enter 0 to disable auto-refresh." xml:space="preserve">
+        <value>0を入力すると自動リフレッシュを無効にします。リフレッシュごとに20ダイヤを消費し、期待値が20を超える場合にのみリフレッシュします。単一タスクの場合、8級の期待値は13、7級は11.6、6級は9.8、5級は7.9、4級は5.7です。4級未満では自動リフレッシュが無効になります。期待値は自動的に2倍報酬イベントを考慮します。</value>
+    </data>
+    <data name="Current expected value: {0}. Today, {1}/{2} auto-refreshes completed. Refreshing now." xml:space="preserve">
+        <value>現在の期待値：{0}。本日自動リフレッシュ {1}/{2} 回完了。リフレッシュ中。</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>キャンセル</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>確認</value>
+    </data>
+</root>

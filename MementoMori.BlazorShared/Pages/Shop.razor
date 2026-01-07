@@ -1,0 +1,355 @@
+﻿@inject IDialogService DialogService
+@inject IWritableOptions<GameConfig> WritableGameConfig
+@inject ISnackbar Snackbar
+@using MementoMori.BlazorShared.Components
+@using MementoMori.Common.Localization
+@using MementoMori.Funcs
+@using MementoMori.Option
+@using MementoMori.Ortega.Common.Utils
+@using MementoMori.Ortega.Custom
+@using MementoMori.Ortega.Share
+@using MementoMori.Ortega.Share.Data.ApiInterface.TradeShop
+@using MementoMori.Ortega.Share.Data.ApiInterface.WeeklyTopics
+@using MementoMori.Ortega.Share.Data.Item
+@using MementoMori.Ortega.Share.Data.TradeShop
+@using MementoMori.Ortega.Share.Enums
+@using MementoMori.Ortega.Share.Extensions
+@using MementoMori.Ortega.Share.Master.Data
+@using MementoMori.WebUI.Extensions
+@inherits MementoMori.BlazorShared.Models.AccountComponent
+@page "/Shop"
+
+<PageTitle>@Masters.TextResourceTable.Get("[CommonHeaderExchangeLabel]")</PageTitle>
+
+@if (!string.IsNullOrEmpty(_alertMessage))
+{
+    <MudAlert Severity="Severity.Warning">@_alertMessage</MudAlert>
+}
+@if (Funcs?.UserSyncData?.UserItemDtoInfo != null)
+{
+    <MudTabs MinimumTabWidth="20px" @bind-ActivePanelIndex="_selectedTabIndex">
+        <ChildContent>
+            @foreach (var tab in _tradeShopTabInfoList)
+            {
+                var tradeShopTabMb = Masters.TradeShopTabTable.GetById(tab.TradeShopTabId);
+                var tabName = Masters.TextResourceTable.Get(tradeShopTabMb.TabNameKey);
+                if (tabName.IsNullOrEmpty())
+                {
+                    tabName = tradeShopTabMb.Memo;
+                }
+                <MudTabPanel Text="@(tabName)">
+                    <MudPaper Elevation="0" Class="mb-4">
+                        @foreach (var item in tradeShopTabMb.ConsumeItemInfos ?? [])
+                        {
+                            var itemMb = Masters.ItemTable.GetByItemTypeAndItemId(item.ItemType, item.ItemId);
+                            var count = Funcs.UserSyncData.GetUserItemCount(item.ItemType, item.ItemId, true);
+                            var text = $"{Masters.TextResourceTable.Get(itemMb.NameKey)} × {count}";
+                            <MudChip T="string" Text="@text"></MudChip>
+                        }
+
+                        @if (tab.ExpirationTimeStamp > 0)
+                        {
+                            var span = TimeSpan.FromMilliseconds(tab.ExpirationTimeStamp - DateTimeOffset.Now.ToUnixTimeMilliseconds());
+                            var time = span.Days == 0
+                                ? Masters.TextResourceTable.Get("[CommonTimeFormatOnlyTime]", span.Hours, span.Minutes, span.Seconds)
+                                : Masters.TextResourceTable.Get("[CommonRemainTimeFull]", span.Days, span.Hours, span.Minutes, span.Seconds);
+                            var refreshTime = $"{Masters.TextResourceTable.Get("[ExchangeRemainingTimeLabel]")}: {time}";
+
+                            <MudChip T="string" Text="@refreshTime"></MudChip>
+                        }
+                    </MudPaper>
+                    @if (tradeShopTabMb.TradeShopType != TradeShopType.Sphere)
+                    {
+                        <MudGrid>
+                            @foreach (var item in tab.TradeShopItems?.OrderBy(d => d.SortOrder).ToArray() ?? Array.Empty<TradeShopItem>())
+                            {
+                                var (itemName, subName) = GetItemName(item.GiveItem);
+                                string consumeText = "";
+                                long buyMaxCount = 0;
+
+                                if (item.ConsumeItem1 == null)
+                                {
+                                    consumeText = "FREE";
+                                    buyMaxCount = item.LimitTradeCount - item.TradeCount;
+                                }
+                                else
+                                {
+                                    var consumeItemName1 = item.ConsumeItem1.GetItemName();
+                                    consumeText = $"{consumeItemName1} × {item.ConsumeItem1.ItemCount}";
+                                    if (item.ConsumeItem2 != null)
+                                    {
+                                        var consumeItemName2 = item.ConsumeItem2.GetItemName();
+                                        consumeText += $" {consumeItemName2} × {item.ConsumeItem2.ItemCount}";
+                                    }
+
+                                    var itemCount = Funcs.UserSyncData.GetUserItemCount(item.ConsumeItem1.ItemType, item.ConsumeItem1.ItemId, true);
+                                    buyMaxCount = itemCount / item.ConsumeItem1.ItemCount;
+                                    if (item.ConsumeItem2 != null)
+                                    {
+                                        itemCount = Funcs.UserSyncData.GetUserItemCount(item.ConsumeItem2.ItemType, item.ConsumeItem2.ItemId, true);
+                                        buyMaxCount = Math.Min(buyMaxCount, itemCount / item.ConsumeItem2.ItemCount);
+                                    }
+                                }
+
+                                var buyBtnDisabled = (item.LimitTradeCount > 0 && item.IsSoldOut()) || buyMaxCount == 0;
+
+                                <MudItem Class="pa-1">
+                                    <MudCard Elevation="2">
+                                        <MudCardHeader>
+                                            <CardHeaderContent>
+                                                <MudText>@itemName</MudText>
+
+                                            </CardHeaderContent>
+                                        </MudCardHeader>
+                                        <MudCardContent>
+                                            <MudText>@subName</MudText>
+                                            @if (item.SalePercent > 0)
+                                            {
+                                                <MudText Inline="true">@($"{item.SalePercent}{Masters.TextResourceTable.Get("[ShopDiscountLabel]")} ")</MudText>
+                                            }
+                                            @if (item.LimitTradeCount > 0)
+                                            {
+                                                <MudText Inline="true">@Masters.TextResourceTable.Get("[ExchangeCommonLimitLabelFormat]", item.TradeCount, item.LimitTradeCount)</MudText>
+                                            }
+                                        </MudCardContent>
+                                        <MudCardActions>
+                                            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Disabled="buyBtnDisabled" OnClick="() => BuyItem(tab, item)">@consumeText</MudButton>
+                                            <MudIconButton Class="ml-2" Icon="@Icons.Material.Filled.AlarmAdd" Variant="Variant.Outlined" Color="Color.Secondary" OnClick="() => ShowAutoBuyDialog(tradeShopTabMb, item)"></MudIconButton>
+                                        </MudCardActions>
+                                    </MudCard>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        var listByLevel = Masters.SphereTable.GetListByLevel(1);
+
+                        <MudGrid>
+                            @foreach (var sphere in listByLevel)
+                            {
+                                <MudItem>
+                                    <ShopSphereItem SphereMb="sphere" Tab="tab"></ShopSphereItem>
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    }
+                </MudTabPanel>
+            }
+
+        </ChildContent>
+    </MudTabs>
+}
+
+<MudDialog @bind-Visible="_autoBuyDialogVisible" Options="new DialogOptions {CloseButton = true}">
+    <DialogContent>
+        @{
+            var tab = _tradeShopTabInfoList[_selectedTabIndex];
+            var tradeShopTabMb = Masters.TradeShopTabTable.GetById(_tradeShopTabInfoList[_selectedTabIndex].TradeShopTabId);
+            var tabName = Masters.TextResourceTable.Get(tradeShopTabMb.TabNameKey);
+        }
+        <MudText Typo="Typo.h5">@tabName @ResourceStrings.AutoBuy</MudText>
+        <MudSelect Label="@ResourceStrings.ShopAutoBuyItems" T="UserItem" @bind-Value="_selectedAutoBuyItem" Comparer="@(new UserItemComparer())" Clearable="true" HelperText="@ResourceStrings.No_setting_means_buying_any_item">
+            @foreach (var item in tab.TradeShopItems?.OrderBy(d => d.SortOrder).ToArray() ?? Array.Empty<TradeShopItem>())
+            {
+                <MudSelectItem T="UserItem" Value="item.GiveItem">@($"{ItemUtil.GetItemName(item.GiveItem)}×{item.GiveItem.ItemCount}")</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSlider Min="0" Max="100" Step="10" @bind-Value="_selectedAutoBuyDiscount">@($"{ResourceStrings.DiscountPercentageforProducts} {_selectedAutoBuyDiscount}{Masters.TextResourceTable.Get("[ShopDiscountLabel]")}")</MudSlider>
+        <MudSelect Label="@ResourceStrings.ConsumeItem" T="UserItem" @bind-Value="_selectedConsumeItem" Comparer="@(new UserItemComparer())" Clearable="true" HelperText="@ResourceStrings.No_setting_means_using_any_item_for_purchase">
+            @foreach (var item in _consumableItems)
+            {
+                <MudSelectItem T="UserItem" Value="item">@($"{ItemUtil.GetItemName(item)}")</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField Label="@ResourceStrings.Amount_consumed" Variant="Variant.Text" T="long" @bind-Value="_selectedConsumeCount" AutoFocus="true" HelperText="@ResourceStrings.Set_to_0_for_any_amount"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="ConfirmAutoBuy">@ResourceStrings.AutoBuy</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+
+    private List<TradeShopTabInfo> _tradeShopTabInfoList = new();
+    private bool _autoBuyDialogVisible;
+    private int _selectedTabIndex;
+    private UserItem? _selectedAutoBuyItem;
+    private UserItem? _selectedConsumeItem;
+    private long _selectedConsumeCount;
+    private int _selectedAutoBuyDiscount;
+    string _alertMessage = "";
+
+    private List<UserItem> _consumableItems = new();
+
+    protected override async Task AccountChanged()
+    {
+        try
+        {
+            _alertMessage = Funcs!.LoginOk ? string.Empty : ResourceStrings.PleaseLogin;
+            await GetShopInfo();
+        }
+        catch (Exception e)
+        {
+            _alertMessage = e.Message;
+        }
+        finally
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task GetShopInfo()
+    {
+        var listResponse = await Funcs!.GetResponse<GetListRequest, GetListResponse>(new GetListRequest());
+        _tradeShopTabInfoList = listResponse.TradeShopTabInfoList.OrderBy(d => Masters.TradeShopTabTable.GetById(d.TradeShopTabId).SortOrder).ToList();
+        var weeklyTopicInfo = await Funcs!.GetResponse<GetWeeklyTopicsInfoRequest, GetWeeklyTopicsInfoResponse>(new GetWeeklyTopicsInfoRequest());
+        foreach (var tradeShopItems in weeklyTopicInfo.ShopData.TradeShopItemList.GroupBy(d => d.TradeShopItemId / 10000))
+        {
+            _tradeShopTabInfoList.Add(new TradeShopTabInfo
+            {
+                TradeShopTabId = tradeShopItems.Key,
+                ExpirationTimeStamp = weeklyTopicInfo.ShopData.ExpirationTimeStamp,
+                TradeShopItems = tradeShopItems.ToList()
+            });
+        }
+    }
+
+    private void BuyItem(TradeShopTabInfo tab, TradeShopItem tradeShopItem)
+    {
+        var itemCount = 0L;
+        var buyMaxCount = 0L;
+        if (tradeShopItem.ConsumeItem1 != null)
+        {
+            itemCount = Funcs!.UserSyncData.GetUserItemCount(tradeShopItem.ConsumeItem1.ItemType, tradeShopItem.ConsumeItem1.ItemId, true);
+            buyMaxCount = itemCount / tradeShopItem.ConsumeItem1.ItemCount;
+        }
+        if (tradeShopItem.ConsumeItem2 != null)
+        {
+            itemCount = Funcs.UserSyncData.GetUserItemCount(tradeShopItem.ConsumeItem2.ItemType, tradeShopItem.ConsumeItem2.ItemId, true);
+            buyMaxCount = Math.Min(buyMaxCount, itemCount / tradeShopItem.ConsumeItem2.ItemCount);
+        }
+
+        var availableCount = tradeShopItem.LimitTradeCount == 0 ? int.MaxValue : tradeShopItem.LimitTradeCount - tradeShopItem.TradeCount;
+        buyMaxCount = Math.Min(buyMaxCount, availableCount);
+
+        var dialogParameters = new DialogParameters<UseItemDialog>();
+        dialogParameters.Add(d => d.Count, buyMaxCount);
+        dialogParameters.Add(d => d.Name, GetItemName(tradeShopItem.GiveItem).name);
+        dialogParameters.Add(d => d.ButtonText, Masters.TextResourceTable.Get("[ExchangeCommonPurchaseButtonLabel]"));
+        dialogParameters.Add(d => d.UseItemFunc, async count =>
+        {
+            var response = await Funcs.GetResponse<BuyItemRequest, BuyItemResponse>(
+                new BuyItemRequest {TradeShopTabId = tab.TradeShopTabId, TradeShopItemInfos = new List<TradeShopItemInfo> {new() {TradeShopItemId = tradeShopItem.TradeShopItemId, TradeCount = (int) count}}});
+            return response.TradeShopItems.Select(d => d.GiveItem).Cast<IUserItem>().ToList();
+        });
+
+        DialogService.Show<UseItemDialog>(Masters.TextResourceTable.Get("[ExchangeConfirmationViewTitle]"), dialogParameters);
+    }
+
+    private static (string name, string subName) GetItemName(UserItem item)
+    {
+        string itemName;
+        var subName = "";
+        if (item.ItemType == ItemType.CharacterFragment)
+        {
+            var characterMb = Masters.CharacterTable.GetById(item.ItemId);
+            characterMb.GetCharacterName(out var name1, out _);
+            itemName = Masters.TextResourceTable.Get("[CommonItemCharacterFragment]", name1);
+        }
+        else
+        {
+            itemName = ItemUtil.GetItemDisplayName(item);
+        }
+
+        if (item.ItemType == ItemType.EquipmentFragment)
+        {
+            var equipmentCompositeMb = Masters.EquipmentCompositeTable.GetById(item.ItemId);
+            var equipmentMb = Masters.EquipmentTable.GetById(equipmentCompositeMb.EquipmentId);
+            if (equipmentMb.ExclusiveEffectId > 0)
+            {
+                var equipmentExclusiveEffectMb = Masters.EquipmentExclusiveEffectTable.GetById(equipmentMb.ExclusiveEffectId);
+                subName = Masters.CharacterTable.GetById(equipmentExclusiveEffectMb.CharacterId).GetCombinedName("");
+            }
+        }
+
+        itemName = $"{itemName}×{item.ItemCount}";
+        return (itemName, subName);
+    }
+
+    private void ShowAutoBuyDialog(TradeShopTabMB tab, TradeShopItem item)
+    {
+        _consumableItems = tab.ConsumeItemInfos.Select(d => new UserItem {ItemType = d.ItemType, ItemId = d.ItemId}).ToList();
+        _autoBuyDialogVisible = true;
+        _selectedAutoBuyItem = item.GiveItem;
+        _selectedConsumeItem = _consumableItems.First(d => d.IsEqual(item.ConsumeItem1.ItemType, item.ConsumeItem1.ItemId));
+        _selectedConsumeCount = item.ConsumeItem1.ItemCount;
+    }
+
+    private List<GameConfig.ShopAutoBuyItem> ShopAutoBuyItems
+    {
+        get => WritableGameConfig.Value.Shop.AutoBuyItems;
+        set => WritableGameConfig.Update(x => x.Shop.AutoBuyItems = value);
+    }
+
+    private void ConfirmAutoBuy()
+    {
+        if (_selectedAutoBuyItem == null && _selectedConsumeItem == null)
+        {
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            Snackbar.Add(ResourceStrings.ShopAutoBuyPleaseSelectOne, Severity.Error);
+            return;
+        }
+
+        var tmp = ShopAutoBuyItems.ToList();
+        var shopTabId = _tradeShopTabInfoList[_selectedTabIndex].TradeShopTabId;
+
+        var existing = tmp.Find(d => d.ShopTabId == shopTabId && (_selectedAutoBuyItem != null || _selectedConsumeItem != null) &&
+                                     (_selectedAutoBuyItem == null
+                                         ? d.BuyItem == null && d.ConsumeItem.IsConsumeEqual(_selectedConsumeItem)
+                                         : d.ConsumeItem == null && d.BuyItem.IsEqual(_selectedAutoBuyItem)));
+        if (_selectedConsumeItem != null) _selectedConsumeItem.ItemCount = _selectedConsumeCount;
+        if (existing != null)
+        {
+            existing.MinDiscountPercent = _selectedAutoBuyDiscount;
+            existing.ConsumeItem = _selectedConsumeItem;
+            existing.BuyItem = _selectedAutoBuyItem;
+            existing.ShopTabId = shopTabId;
+        }
+        else
+        {
+            tmp.Add(new GameConfig.ShopAutoBuyItem
+            {
+                BuyItem = _selectedAutoBuyItem,
+                MinDiscountPercent = _selectedAutoBuyDiscount,
+                ShopTabId = shopTabId,
+                ConsumeItem = _selectedConsumeItem
+            });
+        }
+
+        ShopAutoBuyItems = tmp;
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add(ResourceStrings.Success, Severity.Success);
+        _autoBuyDialogVisible = false;
+    }
+
+    private class UserItemComparer : IEqualityComparer<UserItem>
+    {
+        public bool Equals(UserItem? x, UserItem? y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null)) return false;
+            if (ReferenceEquals(y, null)) return false;
+            if (x.GetType() != y.GetType()) return false;
+            return x.ItemId == y.ItemId && x.ItemType == y.ItemType;
+        }
+
+        public int GetHashCode(UserItem obj)
+        {
+            return HashCode.Combine(obj.ItemId, (int) obj.ItemType);
+        }
+    }
+
+}

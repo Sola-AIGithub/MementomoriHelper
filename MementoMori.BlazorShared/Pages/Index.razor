@@ -1,0 +1,525 @@
+﻿@inject IJSRuntime JsRuntime
+@inject IDialogService DialogService
+@inject IWritableOptions<GameConfig> GameConfig
+@inject IHttpClientFactory HttpClientFactory
+
+@inherits MementoMori.BlazorShared.Models.AccountComponent
+@page "/"
+@using MementoMori.Ortega.Share
+@using MementoMori.Ortega.Share.Data
+@using MementoMori.Ortega.Share.Enums
+@using MementoMori.WebUI.Extensions
+@using MementoMori.BlazorShared.Components
+@using Newtonsoft.Json.Linq
+@using ReactiveUI
+@using DynamicData.Binding
+@using MementoMori.Ortega.Common.Utils
+@using MementoMori.Ortega.Share.Data.Auth
+@using MementoMori.Ortega.Share.Data.DtoInfo
+@using MementoMori.Ortega.Share.Data.MyPage
+@using MementoMori.Ortega.Share.Data.Notice
+@using MementoMori.Common.Localization
+@using MementoMori.Option
+@using MementoMori.Ortega.Custom
+@using Microsoft.Extensions.Options
+@using static MementoMori.Ortega.Share.Masters
+@using System.Reflection
+@using MementoMori.BlazorShared.Models
+
+<PageTitle>@Tr("[CommonFooterHomeButtonLabel]")</PageTitle>
+
+<MudGrid>
+@if (!string.IsNullOrEmpty(newVersionMessage))
+{
+    <MudItem md="12">
+        <MudAlert Severity="Severity.Warning">
+                <MudText>@newVersionMessage</MudText>
+            <MudButton Href="https://github.com/moonheart/mementomori-helper/releases"
+                       Target="_blank"
+                       Variant="Variant.Outlined"
+                       Style="text-transform:none"
+                       StartIcon="@Icons.Custom.Brands.GitHub"
+                       Color="Color.Primary">
+                mementomori-helper
+            </MudButton>
+            <MudMarkdown Value="@releaseBody"/>
+        </MudAlert>
+    </MudItem>
+}
+@if (!string.IsNullOrEmpty(alertMessage))
+{
+    <MudItem md="12">
+        <MudAlert Severity="Severity.Warning">@alertMessage</MudAlert>
+    </MudItem>
+}
+@if (AccountManager.CurrentUserId > 0)
+{
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudCard>
+            <MudCardHeader Class="justify-space-between">
+                <MudText>@ResourceStrings.CharacterInfo</MudText>
+                <MudPaper Elevation="0" Class="d-flex justify-end gap-2">
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="Funcs.Logining" @onclick="ShowPlayerList">
+                        @ResourceStrings.Login
+                        @if (Funcs.Logining)
+                        {
+                            <MudProgressCircular Size="Size.Small"/>
+                        }
+                    </MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="Funcs.Logining" @onclick="Funcs.SyncUserData">@ResourceStrings.SyncUserInfo</MudButton>
+                </MudPaper>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudSimpleTable Elevation="0" Dense="true">
+                    <tbody>
+                    <tr>
+                        <td colspan="2">@Tr("[CommonPlayerNameFormat]", Funcs.UserSyncData?.UserStatusDtoInfo?.Name)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@Tr("[PlayerId]") : @Funcs.UserSyncData?.UserStatusDtoInfo?.PlayerId</td>
+                    </tr>
+                    <tr>
+                        @{
+                            var createTime = "";
+                            if (Funcs.LoginOk)
+                            {
+                                createTime = (Funcs.UserSyncData?.UserStatusDtoInfo?.CreateAt.ToDateTimeOffset() - NetworkManager.TimeManager.DiffFromUtc).ToString();
+                            }
+                        }
+                        <td colspan="2">@ResourceStrings.Account_Creation_Time : @(createTime)</td>
+                    </tr>
+                    <tr>
+                        <td>@Tr("[CommonPlayerRankLabel]") : @Funcs.UserSyncData?.UserStatusDtoInfo?.Rank</td>
+                        <td>@Tr("[CommonVipWithSpaceFormat]", Funcs.UserSyncData?.UserStatusDtoInfo?.Vip)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@Tr("[MyPagePlayerInformationCommentLabel]") : @Funcs.UserSyncData?.UserStatusDtoInfo?.Comment</td>
+                    </tr>
+                    <tr>
+                        @{
+                            var free = Funcs.UserSyncData.GetUserItemCount(ItemType.CurrencyFree, 1);
+                            var paid = Funcs.UserSyncData.GetUserItemCount(ItemType.CurrencyPaid, 0);
+                            <td colspan="2">@Tr("[ItemName4]") : @($"{free + paid}, {Tr("[CurrencyDetailCurrencyFree]")} {free}, {Tr("[CurrencyDetailCurrencyPaid]")} {paid}") </td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>@Tr("[ItemName9]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.FriendPoint, 1))</td>
+                        <td>@Tr("[ItemName11]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.CharacterTrainingMaterial, 2))</td>
+                    </tr>
+                    <tr>
+                        <td>@Tr("[ItemName5]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.Gold, 1).ToString("N0"))</td>
+                        <td>
+                            @Tr("[ItemName10]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.CharacterTrainingMaterial, 1).ToString("N0"))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Tr("[ItemName43]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.ExchangePlaceItem, 4).ToString("N0"))</td>
+                        <td>
+                            @Tr("[ItemName16]") : @(Funcs.UserSyncData.GetUserItemCount(ItemType.EquipmentRarityCrystal, 1).ToString("N0"))
+                        </td>
+                    </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudPaper Class="pa-4">
+            <MudPaper Elevation="0" Class="d-flex">
+                <MudText>@Tr("[CommonFooterHomeButtonLabel]")</MudText>
+                <MudSpacer/>
+                <MudButton Variant="Variant.Filled" Size="Size.Small" @onclick="Funcs.GetMyPage" StartIcon="@Icons.Material.Filled.Sync">@ResourceStrings.Sync</MudButton>
+            </MudPaper>
+            <MudPaper Elevation="0">
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@(Funcs.Mypage?.ExistNewFriendPointTransfer ?? false)">
+                    <MudChip T="string">@Tr("[ItemName9]")</MudChip>
+                </MudBadge>
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@(Funcs.Mypage?.ExistNewPrivateChat ?? false)">
+                        <MudChip T="string">@Tr("[CommonHeaderChatLabel]")</MudChip>
+                </MudBadge>
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@(Funcs.Mypage?.ExistNotReceivedBountyQuestReward ?? false)">
+                        <MudChip T="string">@Tr("[CommonHeaderBountyQuestLabel]")</MudChip>
+                </MudBadge>
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@(Funcs.Mypage?.ExistNotReceivedMissionReward ?? false)">
+                        <MudChip T="string">@Tr("[MyPageMenuButtonMissionLabel]")</MudChip>
+                </MudBadge>
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@Funcs.IsNotClearDungeonBattleMap">
+                        <MudChip T="string">@Tr("[CommonHeaderDungeonBattleLabel]")</MudChip>
+                </MudBadge>
+                <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@(Funcs.UserSyncData?.PresentCount > 0)">
+                        <MudChip T="string">@Tr("[MyPageMenuButtonPresentBoxLabel]")</MudChip>
+                </MudBadge>
+                @foreach (var info in Funcs.Mypage?.MypageInfo?.MypageIconInfos ?? new List<MypageIconInfo>())
+                {
+                    var name = Tr(info.IconNameKey);
+                    <MudBadge Overlap="true" Bordered="true" Color="Color.Info" Visible="@info.IsDisplayBadge">
+                            <MudChip T="string">@((MarkupString)name)</MudChip>
+                    </MudBadge>
+                }
+            </MudPaper>
+            <MudDivider Class="my-2"/>
+            <MudPaper Elevation="0" Class="d-flex flex-wrap align-center">
+                <MudText>@Tr("[CommonHeaderBountyQuestLabel]")</MudText>
+                <MudSpacer/>
+                @if (GameConfig.Value.BountyQuestAuto.TargetItems.Count > 0)
+                {
+                    <MudSwitch T="bool" Color="Color.Info" @bind-Value="@Funcs.BountyRequestForceAll" Label="@ResourceStrings.ForceDispatch"></MudSwitch>
+                }
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BountyQuestRewardAuto">@Tr("[BountyQuestAllReceive]")</MudButton>
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BountyQuestStartAuto">@Tr("[BountyQuestAutoPlacement]")</MudButton>
+                <MudButton Variant="Variant.Filled" Size="Size.Small" @onclick="Funcs.RemakeBountyRequest" StartIcon="@Icons.Material.Filled.Refresh">
+                    @Tr("[CommonAlternativesItemFormat]", Tr("[CommonCurrencyName]"), 20)
+                </MudButton>
+                <MudButton Class="ml-2" Variant="Variant.Filled" Size="Size.Small" @onclick="Funcs.GetBountyRequestInfo" StartIcon="@Icons.Material.Filled.Sync">@ResourceStrings.Sync</MudButton>
+            </MudPaper>
+            <MudPaper Elevation="0">
+                @foreach (var info in Funcs.BountyQuestResponseInfo?.UserBountyQuestDtoInfos ?? new List<UserBountyQuestDtoInfo>())
+                {
+                    var bountyQuestInfo = Funcs.BountyQuestResponseInfo.BountyQuestInfos.ToList().Find(d => d.BountyQuestId == info.BountyQuestId);
+                    var name = Tr(bountyQuestInfo.BountyQuestNameKey);
+                    var rarityName = Tr(bountyQuestInfo.BountyQuestRarity);
+                    var itemNames = bountyQuestInfo.BountyQuestType == BountyQuestType.Guerrilla
+                        ? Tr("[ItemRewardDetailDialogLotteryRateLabel]")
+                        : string.Join(",", bountyQuestInfo.RewardItems.Select(d => $"{ItemUtil.GetItemName(d)}×{d.ItemCount}"));
+                    var status = ResourceStrings.NotStarted;
+                    if (info.BountyQuestEndTime > 0)
+                    {
+                        var nowMilli = DateTimeOffset.Now.Add(Funcs.TimeManager.DiffFromUtc).ToUnixTimeMilliseconds();
+                        if (nowMilli < info.BountyQuestEndTime)
+                        {
+                            status = ResourceStrings.OnGoing + " " + TimeSpan.FromMilliseconds(info.BountyQuestEndTime - nowMilli).ToString(@"hh\:mm\:ss");
+                        }
+                        else if (!info.IsReward)
+                        {
+                            status = ResourceStrings.NotReceived + TimeSpan.FromMilliseconds(info.RewardEndTime - nowMilli).ToString(@"hh\:mm\:ss");
+                        }
+                        else
+                        {
+                            status = ResourceStrings.Received;
+                        }
+                    }
+                        <MudChip T="string">@rarityName @itemNames @status</MudChip>
+                }
+            </MudPaper>
+        </MudPaper>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudCard>
+            <MudCardHeader Class="justify-space-between">
+                <MudText>@Tr("[MyPageMenuButtonMissionLabel]")</MudText>
+                <MudPaper Elevation="0" Class="d-flex justify-end gap-2">
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" @onclick="@Funcs.GetMissionInfo">@ResourceStrings.Sync</MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" @onclick="@Funcs.CompleteMissions">@Tr("[MissionAllReceiveButton]")</MudButton>
+                    <MudButton Size="Size.Small" Variant="Variant.Filled" @onclick="@Funcs.RewardMissonActivity">@ResourceStrings.RewardMissonActivity</MudButton>
+                </MudPaper>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudSimpleTable Elevation="0" Dense="true" Style="height: 400px; overflow: auto">
+                    <tbody>
+                    @foreach (var missionInfo in Funcs.MissionInfoDict?.Values.SelectMany(d => d.UserMissionDtoInfoDict?.Values.SelectMany(x => x) ?? Array.Empty<UserMissionDtoInfo>()) ?? Array.Empty<UserMissionDtoInfo>())
+                    {
+                        @if (missionInfo.MissionStatusHistory[MissionStatusType.Progress].Any())
+                        {
+                            var missionId = missionInfo.MissionStatusHistory[MissionStatusType.Progress].Last();
+                            var missionMb = MissionTable.GetById(missionId);
+                            var name = Tr(missionMb.NameKey);
+                            var info = $"{missionInfo.ProgressCount}/{missionMb.RequireValue}";
+
+                            <tr>
+                                <td>@missionInfo.MissionType</td>
+                                <td>@name</td>
+                                <td>@info</td>
+                            </tr>
+                        }
+                        else if (missionInfo.MissionStatusHistory[MissionStatusType.NotReceived].Any())
+                        {
+                            var missionId = missionInfo.MissionStatusHistory[MissionStatusType.NotReceived].Last();
+                            var missionMb = MissionTable.GetById(missionId);
+                            var name = Tr(missionMb.NameKey);
+
+                            <tr>
+                                <td>@missionInfo.MissionType</td>
+                                <td>@name</td>
+                                <td>@ResourceStrings.NotReceived</td>
+                            </tr>
+                        }
+                        else if (missionInfo.MissionStatusHistory[MissionStatusType.Locked].Any())
+                        {
+                            var missionId = missionInfo.MissionStatusHistory[MissionStatusType.Locked].Last();
+                            var missionMb = MissionTable.GetById(missionId);
+                            var name = Tr(missionMb.NameKey);
+
+                            <tr>
+                                <td>@missionInfo.MissionType</td>
+                                <td>@name</td>
+                                <td>@ResourceStrings.NotUnlocked</td>
+                            </tr>
+                        }
+                        else if (missionInfo.MissionType == MissionType.Daily || missionInfo.MissionType == MissionType.Weekly)
+                        {
+                            var missionId = missionInfo.MissionStatusHistory[MissionStatusType.Received].Last();
+                            var missionMb = MissionTable.GetById(missionId);
+                            var name = Tr(missionMb.NameKey);
+                            <tr>
+                                <td>@missionInfo.MissionType</td>
+                                <td>@name</td>
+                                <td>@ResourceStrings.Finished</td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </MudSimpleTable>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudCard>
+            <MudCardHeader Class="">
+                <MudText>@ResourceStrings.QuickActions</MudText>
+                <MudSpacer/>
+                <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="Funcs.IsQuickActionExecuting" @onclick="Funcs.ExecuteAllQuickAction">@ResourceStrings.ExecuteAllQuick</MudButton>
+                <MudButton Class="ml-2" Size="Size.Small" Variant="Variant.Filled" Disabled="!Funcs.IsQuickActionExecuting" @onclick="Funcs.CancelQuickAction">@Tr("[CommonCancelLabel]")</MudButton>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTabs Position="Position.Left" MinimumTabWidth="20px">
+                    <MudTabPanel Text="@ResourceStrings.ExecuteAllQuick">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.GetLoginBonus">@Tr("[MyPageButtonLoginBonusLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.GetVipGift">@Tr("[VipDailyRewardLabelFormat]", Funcs.UserSyncData?.UserStatusDtoInfo?.Vip)</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.ReceiveMonthlyBoost">@Tr("[CommonMonthlyBoosterLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.GetAutoBattleReward">@Tr("[AutoBattleRewardInfoRewardLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BulkTransferFriendPoint">@Tr("[ItemName9]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.PresentReceiveItem">@Tr("[MyPagePresentBoxButtonTitle]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.ReinforcementEquipmentOneTime">@ResourceStrings.ReinforceEquipmentOnce</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BattleBossQuick">@Tr("[BattleTypeBoss]") @Tr("[GuildRaidMultipleCleanup]", 3)</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.InfiniteTowerQuick">@Tr("[CommonHeaderTowerBattleLabel]") @Tr("[GuildRaidMultipleCleanup]", 3)</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.PvpAuto">@Tr("[CommonHeaderLocalPvpLabel]") @Tr("[BattleTypeAuto]") @Tr("[CommonTimesFormat]", 5)</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.LegendLeagueAuto">@Tr("[CommonHeaderGlobalPvpLabel]") @Tr("[BattleTypeAuto]") @Tr("[CommonTimesFormat]", 10)</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BossHishSpeedBattle">@Tr("[GachaFree]") @Tr("[AutoBattleButtonQuickForward]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.FreeGacha">@Tr("[GachaFree]") @Tr("[CommonFooterGachaButtonLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.GuildCheckin">@Tr("[MissionName533]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.GuildRaid">@Tr("[CommonHeaderGuildRaidLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.OpenGuildRaid">@Tr("[GuildRaidReleaseConfirmTitle]")</MudButton>
+                            @* <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.SetupLocalGvgDefense">@($"{Tr("[CommonHeaderGvgLabel]")} {ResourceStrings.Deploy_defense}")</MudButton> *@
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.ReceiveGvgReward">@($"{Tr("[CommonHeaderGvgLabel]")} {Tr("[GuildRewardTitle]")}")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoLocalRaid">@Tr("[CommonHeaderLocalRaidLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoGuildTower">@Tr("[GuildTowerTitle]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BountyQuestRewardAuto">@Tr("[CommonHeaderBountyQuestLabel]") @Tr("[BountyQuestAllReceive]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.BountyQuestStartAuto">@Tr("[CommonHeaderBountyQuestLabel]") @Tr("[BountyQuestAutoPlacement]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoBuyShopItem">@ResourceStrings.ShopAutoBuyItems</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoUseItems">@ResourceStrings.UseNormalItems</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoRankUpCharacter">@Tr("[CharacterRankUpBulkButton]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.ReadAllMemories">@Tr("[CharacterDetailMemory]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.ReceiveAchievementReward">@Tr("[AchieveRankingAchievementTargetLabel]")</MudButton>
+                            <MudButton Size="Size.Small" Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.UseFriendCode">@Tr("[InputFriendCodeEnabled]")</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[ItemBoxButtonBulkCasting]")">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoEquipmentMatchlessInheritance">@ResourceStrings.AutoMatchlessInheritance</MudButton>
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoEquipmentLegendInheritance">@ResourceStrings.AutoLegendInheritance</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[PlayerRankingTypeStage]")">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudSelect T="long" @bind-Value="@selectedTargetQuerstId" Label="@ResourceStrings.StopAfterSpecifiedStage" Variant="Variant.Outlined">
+                                <MudSelectItem T="long" Value="0">@ResourceStrings.NoStop</MudSelectItem>
+                                @foreach (var quest in QuestTable.GetArray().Where(d => d.BaseBattlePower > 0 && d.Id > Funcs.UserSyncData.UserBattleBossDtoInfo?.BossClearMaxQuestId).Take(50))
+                                {
+                                    <MudSelectItem T="long" Value="quest.Id">@quest.Memo</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" OnClick="() => Funcs.AutoBossRequest(selectedTargetQuerstId)">@Tr("[BattleTypeBoss]") @Tr("[BattleTypeAuto]")</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[CommonHeaderDungeonBattleLabel]")">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.AutoDungeonBattle">@Tr("[CommonHeaderDungeonBattleLabel]") @Tr("[BattleTypeAuto]")</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[CommonHeaderTowerBattleLabel]")">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudSelect T="TowerType" Label="@ResourceStrings.TowerType" Variant="Variant.Filled" @bind-Value="@Funcs.SelectedAutoTowerType">
+                                @foreach (var type in Funcs.GetAvailableTower())
+                                {
+                                    <MudSelectItem T="TowerType" Value="@type">@(Tr(type))</MudSelectItem>
+                                }
+                            </MudSelect>
+                            @if (Funcs.SelectedAutoTowerType != TowerType.None)
+                            {
+                                var maxTowerBattleId = Funcs.UserSyncData.UserTowerBattleDtoInfos.ToList().Find(x => x.TowerType == Funcs.SelectedAutoTowerType).MaxTowerBattleId;
+                                var quests = TowerBattleQuestTable.GetArray().Where(d => d.TowerType == Funcs.SelectedAutoTowerType && d.Floor > maxTowerBattleId).Take(50);
+                                <MudSelect @bind-Value="selectedTargetTowerLayer" Label="@ResourceStrings.StopAfterSpecifiedStage">
+                                    <MudSelectItem T="long" Value="0">@ResourceStrings.NoStop</MudSelectItem>
+                                    @foreach (var layer in quests)
+                                    {
+                                        <MudSelectItem T="long" Value="layer.Floor">@layer.Floor</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            }
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" OnClick="() => Funcs.AutoInfiniteTowerRequest(selectedTargetTowerLayer)">@Tr("[CommonHeaderTowerBattleLabel]") @Tr("[BattleTypeAuto]")</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[CommonForgedLabel]")">
+                        <EquipmentTraining />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Debug">
+                        <MudPaper Elevation="0" Class="pa-2">
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.Debug">Debug</MudButton>
+                            <MudButton Variant="Variant.Filled" Disabled="@Funcs.IsQuickActionExecuting" @onclick="@Funcs.LogDebug">LogTest</MudButton>
+                        </MudPaper>
+                    </MudTabPanel>
+                </MudTabs>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudCard>
+            <MudCardHeader>@ResourceStrings.ExecutionOutput</MudCardHeader>
+            <MudCardContent>
+                <MessageList/>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudPaper>
+            <MudTabs HeaderPosition="TabHeaderPosition.After" MinimumTabWidth="20px">
+                <Header>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                        <MudSpacer/>
+                        <MudButton Size="Size.Small" Variant="Variant.Filled" @onclick="@Funcs.GetNoticeInfoList">@ResourceStrings.Sync</MudButton>
+                    </MudStack>
+                </Header>
+                <ChildContent>
+                    <MudTabPanel Text="@Tr("[NoticeCategoryTypeEventTab]")">
+                        @if (Funcs.EventInfoList != null)
+                        {
+                            <MudTable Elevation="0" T="NoticeInfo" Items="@Funcs.EventInfoList" Virtualize="true" Dense="true" Height="400px">
+                                <RowTemplate>
+                                    <MudTd>@(context.Title)</MudTd>
+                                    <MudTd>
+                                        <MudButton Size="Size.Small" @onclick="() => ShowNotice(context)" StartIcon="@Icons.Material.Filled.ZoomIn"/>
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Tr("[NoticeCategoryTypeNoticeTab]")">
+                        @if (Funcs.NoticeInfoList != null)
+                        {
+                            <MudTable Elevation="0" T="NoticeInfo" Items="@Funcs.NoticeInfoList" Virtualize="true" Dense="true" Height="400px">
+                                <RowTemplate>
+                                    <MudTd>@(context.Title)</MudTd>
+                                    <MudTd>
+                                        <MudButton Size="Size.Small" @onclick="() => ShowNotice(context)" StartIcon="@Icons.Material.Filled.ZoomIn"/>
+                                    </MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        }
+                    </MudTabPanel>
+                </ChildContent>
+            </MudTabs>
+        </MudPaper>
+    </MudItem>
+    <MudItem sm="12" md="6" lg="4" xl="3">
+        <MudCard>
+            <MudCardHeader>
+                <MudSwitch T="bool" Color="Color.Info" @bind-Value="@Funcs.ShowDebugInfo" Label="Debug Info"></MudSwitch>
+            </MudCardHeader>
+            <MudCardContent Style="max-height: 400px; overflow: scroll">
+                @if (Funcs.ShowDebugInfo)
+                {
+                    <pre>
+                 @Funcs.UserSyncData.ToJson(true)
+                 </pre>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+}
+</MudGrid>
+
+@code {
+    private long selectedTargetQuerstId;
+    private long selectedTargetTowerLayer;
+    string alertMessage = "";
+    string newVersionMessage = "";
+    string releaseBody = "";
+
+    private List<PlayerDataInfo> playerDataInfos = new();
+
+    protected override async Task AccountChanged()
+    {
+        try
+        {
+            alertMessage = Funcs.LoginOk ? string.Empty : ResourceStrings.PleaseLogin;
+            Funcs.WhenAnyPropertyChanged().Subscribe(_ => InvokeAsync(StateHasChanged));
+        }
+        catch (Exception e)
+        {
+            alertMessage = e.Message;
+        }
+        finally
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _ = CheckLatestVersion();
+
+        _ = Funcs.GetNoticeInfoList();
+    }
+
+    private void ShowNotice(NoticeInfo context)
+    {
+        var options = new DialogOptions()
+        {
+            CloseOnEscapeKey = true
+        };
+        DialogService.ShowMessageBox(context.Title, (MarkupString) context.MainText);
+    }
+
+    private async Task ShowPlayerList()
+    {
+        playerDataInfos = await Funcs.GetPlayerDataInfo();
+        var parameters = new DialogParameters<SelectPlayer>();
+        parameters.Add(d => d.PlayerDataInfos, playerDataInfos);
+        var dialog = await DialogService.ShowAsync<SelectPlayer>(ResourceStrings.SelectPlayer, parameters, new DialogOptions() {CloseButton = true});
+        var result = await dialog.Result;
+
+        if (!result.Canceled && result.Data is PlayerDataInfoEx playerDataInfoEx && playerDataInfoEx.PlayerDataInfo is PlayerDataInfo playerDataInfo)
+        {
+            await Funcs.Login(playerDataInfo, playerDataInfoEx.AutoLoginThisWorld);
+        }
+    }
+
+    private async Task CheckLatestVersion()
+    {
+        try
+        {
+            var githubUrl = "https://api.github.com/repos/moonheart/mementomori-helper/releases/latest";
+            var httpClient = HttpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "mementomori-helper");
+            var json = await httpClient.GetStringAsync(githubUrl);
+            var release = JObject.Parse(json);
+            var version = release["tag_name"].ToString();
+            releaseBody = release["body"].ToString();
+            var newVersion = Version.Parse(version.TrimStart('v'));
+            Assembly assembly = Assembly.GetEntryAssembly();
+            var currentVersion = assembly.GetName().Version;
+            if (newVersion > currentVersion)
+            {
+                newVersionMessage = string.Format(ResourceStrings.The_current_version___0___is_not_the_latest_version___1____Click_to_download_the_latest_version_, currentVersion, version);
+                this.InvokeAsync(() => StateHasChanged());
+            }
+        }
+        catch
+        {
+            
+        }
+    }
+
+}

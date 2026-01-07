@@ -1,0 +1,114 @@
+﻿@using MementoMori.Option
+@using MementoMori.Ortega.Share
+@using MementoMori.Jobs
+@using MementoMori.Common.Localization
+@inject IWritableOptions<GameConfig> WritableGameConfig
+@inject TimeZoneAwareJobRegister TimeZoneAwareJobRegister
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText>@ResourceStrings.AutoJobSwitchs (Global)</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudSwitch Label="@ResourceStrings.DisableAllJobs" @bind-Value="AutoJob__DisableAll" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@ResourceStrings.ReinforceEquipmentOnce" @bind-Value="AutoJob__AutoReinforcementEquipmentOneTime" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CommonHeaderLocalPvpLabel]")" @bind-Value="AutoJob__AutoPvp" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CommonHeaderGlobalPvpLabel]")" @bind-Value="AutoJob__AutoLegendLeague" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CommonHeaderDungeonBattleLabel]")" @bind-Value="AutoJob__AutoDungeonBattle" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@ResourceStrings.UseNormalItems" @bind-Value="AutoJob__AutoUseItems" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CommonFooterGachaButtonLabel]")" @bind-Value="AutoJob__AutoFreeGacha" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CharacterMenuTabCharacterRankUp]")" @bind-Value="AutoJob__AutoRankUpCharacter" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[GuildRaidReleaseConfirmTitle]")" @bind-Value="AutoJob__AutoOpenGuildRaid" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@Tr("[CommonHeaderLocalRaidLabel]")" @bind-Value="AutoJob__AutoLocalRaid" Color="Color.Primary"></MudSwitch>
+        @* <MudSwitch Label="@ResourceStrings.Deploy_defense" @bind-Value="AutoJob__AutoDeployGuildDefense" Color="Color.Primary"></MudSwitch> *@
+        <MudSwitch Label="@Tr("[GachaRelicChangeTitle]")" @bind-Value="AutoJob__AutoChangeGachaRelic" Color="Color.Primary"></MudSwitch>
+        <MudSwitch Label="@ResourceStrings.Auto_draw_10_times__up_to_3_draws_" @bind-Value="AutoJob__AutoDrawGachaRelic" Color="Color.Primary"></MudSwitch>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    public bool AutoJob__DisableAll
+    {
+        get => WritableGameConfig.Value.AutoJob.DisableAll;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.DisableAll = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public bool AutoJob__AutoReinforcementEquipmentOneTime
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoReinforcementEquipmentOneTime;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoReinforcementEquipmentOneTime = value);
+    }
+
+    public bool AutoJob__AutoPvp
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoPvp;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoPvp = value);
+    }
+
+    public bool AutoJob__AutoLegendLeague
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoLegendLeague;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoLegendLeague = value);
+    }
+
+    public bool AutoJob__AutoDungeonBattle
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoDungeonBattle;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoDungeonBattle = value);
+    }
+
+    public bool AutoJob__AutoUseItems
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoUseItems;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoUseItems = value);
+    }
+
+    public bool AutoJob__AutoFreeGacha
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoFreeGacha;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoFreeGacha = value);
+    }
+
+    public bool AutoJob__AutoRankUpCharacter
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoRankUpCharacter;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoRankUpCharacter = value);
+    }
+
+    public bool AutoJob__AutoOpenGuildRaid
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoOpenGuildRaid;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoOpenGuildRaid = value);
+    }
+
+    public bool AutoJob__AutoLocalRaid
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoLocalRaid;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoLocalRaid = value);
+    }
+
+    public bool AutoJob__AutoDeployGuildDefense
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoDeployGuildDefense;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoDeployGuildDefense = value);
+    }
+
+    public bool AutoJob__AutoChangeGachaRelic
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoChangeGachaRelic;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoChangeGachaRelic = value);
+    }
+
+    public bool AutoJob__AutoDrawGachaRelic
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoDrawGachaRelic;
+        set => WritableGameConfig.Update(x => x.AutoJob.AutoDrawGachaRelic = value);
+    }
+
+}

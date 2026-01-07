@@ -1,0 +1,40 @@
+﻿namespace MementoMori.Ortega.Common.Enums
+{
+	public enum TransitionState
+	{
+		None,
+		TitleDownloadAll,
+		TitleSplash,
+		TitleMoveToGuidedWorld,
+		TitleWorldChange,
+		TitleFromEntryPointScene,
+		MyPagePlayTouchAction,
+		MyPagePictureBook,
+		MyPageMission,
+		MyPagePlayerInfo,
+		MyPageMenu,
+		MyPageCommunity,
+		MyPageDeepLink,
+		MyPageGuildRecruitTutorial,
+		MyPageWeeklyTopics,
+		MyPageEventPortal,
+		AutoBattleQuestChangeWithNext,
+		AutoBattleQuestChangeWithTap,
+		AutoBattleQuestInfoFormation,
+		AutoBattleReport,
+		BattleSimulationReplay,
+		CharacterListRankUp,
+		CharacterListEquipmentSynchro,
+		ScenarioGameMode,
+		ScenarioEditorMode,
+		ScenarioDebugMode,
+		TowerBattleFormation,
+		DungeonBattleClear,
+		DungeonBattleOpenFormation,
+		GvgCastleInfo,
+		GvgBattle,
+		GvgMvp,
+		LocalRaidReport,
+		GuildTowerReinforcement
+	}
+}

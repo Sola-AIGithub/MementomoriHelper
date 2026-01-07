@@ -1,0 +1,151 @@
+﻿@using MementoMori.Option
+@using MementoMori.Ortega.Share
+@using MementoMori.Jobs
+@using MementoMori.Common.Localization
+@inject IWritableOptions<GameConfig> WritableGameConfig
+@inject TimeZoneAwareJobRegister TimeZoneAwareJobRegister
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText>@ResourceStrings.AutoJobCrons (Global)</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudButton Href="https://www.freeformatter.com/cron-expression-generator-quartz.html"
+                       Target="_blank"
+                       Size="Size.Small"
+                       Variant="Variant.Outlined"
+                       Style="text-transform:none"
+                       StartIcon="@Icons.Material.Filled.Help"
+                       Color="Color.Primary">@ResourceStrings.CronExpression</MudButton>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudTextField Margin="Margin.Dense" Label="@($"{ResourceStrings.DailyJob}")" @bind-Value="AutoJob__DailyJobCron" Variant="Variant.Outlined" 
+                      Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__DailyJobCron = defaultValue.DailyJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{ResourceStrings.RewardClaimJob}")" @bind-Value="AutoJob__HourlyJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__HourlyJobCron = defaultValue.HourlyJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{Masters.TextResourceTable.Get("[CommonHeaderLocalPvpLabel]")}")" @bind-Value="AutoJob__PvpJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__PvpJobCron = defaultValue.PvpJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{Masters.TextResourceTable.Get("[CommonHeaderGlobalPvpLabel]")}")" @bind-Value="AutoJob__LegendLeagueJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__LegendLeagueJobCron = defaultValue.LegendLeagueJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{Masters.TextResourceTable.Get("[GuildRaidReleaseConfirmTitle]")}")" @bind-Value="AutoJob__GuildRaidBossReleaseCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__GuildRaidBossReleaseCron = defaultValue.GuildRaidBossReleaseCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{ResourceStrings.ShopAutoBuyItems}")" @bind-Value="AutoJob__AutoBuyShopItemJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__AutoBuyShopItemJobCron = defaultValue.AutoBuyShopItemJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{Masters.TextResourceTable.Get("[CommonHeaderLocalRaidLabel]")}")" @bind-Value="AutoJob__AutoLocalRaidJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__AutoLocalRaidJobCron = defaultValue.AutoLocalRaidJobCron"></MudTextField>
+            @* <MudTextField Margin="Margin.Dense" Label="@($"{ResourceStrings.Deploy_defense}")" @bind-Value="AutoJob__AutoDeployGuildDefenseJobCron" Variant="Variant.Outlined" *@
+            @*               Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__AutoDeployGuildDefenseJobCron = defaultValue.AutoDeployGuildDefenseJobCron"></MudTextField> *@
+            <MudTextField Margin="Margin.Dense" Label="@($"{Tr("[GachaRelicChangeTitle]")}")" @bind-Value="AutoJob__AutoChangeGachaRelicJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__AutoChangeGachaRelicJobCron = defaultValue.AutoChangeGachaRelicJobCron"></MudTextField>
+            <MudTextField Margin="Margin.Dense" Label="@($"{ResourceStrings.Auto_draw_10_times__up_to_3_draws_}")" @bind-Value="AutoJob__AutoDrawGachaRelicJobCron" Variant="Variant.Outlined"
+                          Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Restore" OnAdornmentClick="() => AutoJob__AutoDrawGachaRelicJobCron = defaultValue.AutoDrawGachaRelicJobCron"></MudTextField>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    GameConfig.AutoJobModel defaultValue = new();
+
+    public string AutoJob__DailyJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.DailyJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.DailyJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__HourlyJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.HourlyJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.HourlyJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__PvpJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.PvpJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.PvpJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__LegendLeagueJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.LegendLeagueJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.LegendLeagueJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__GuildRaidBossReleaseCron
+    {
+        get => WritableGameConfig.Value.AutoJob.GuildRaidBossReleaseCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.GuildRaidBossReleaseCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__AutoBuyShopItemJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoBuyShopItemJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.AutoBuyShopItemJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__AutoLocalRaidJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoLocalRaidJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.AutoLocalRaidJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__AutoDeployGuildDefenseJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoDeployGuildDefenseJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.AutoDeployGuildDefenseJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__AutoChangeGachaRelicJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoChangeGachaRelicJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.AutoChangeGachaRelicJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+    public string AutoJob__AutoDrawGachaRelicJobCron
+    {
+        get => WritableGameConfig.Value.AutoJob.AutoDrawGachaRelicJobCron;
+        set
+        {
+            WritableGameConfig.Update(x => x.AutoJob.AutoDrawGachaRelicJobCron = value);
+            TimeZoneAwareJobRegister.RegisterAllJobs().ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+    }
+
+}

@@ -1,0 +1,142 @@
+﻿@using MementoMori.BlazorShared.Components
+@using MementoMori.Common.Localization
+@using MementoMori.Funcs
+@using MementoMori.Ortega.Common.Utils
+@using MementoMori.Ortega.Custom
+@using MementoMori.Ortega.Share
+@using MementoMori.Ortega.Share.Data
+@using MementoMori.Ortega.Share.Data.Battle
+@using MementoMori.Ortega.Share.Data.Character
+@using MementoMori.Ortega.Share.Data.DtoInfo
+@using MementoMori.Ortega.Share.Enums
+@using MementoMori.Ortega.Share.Utils
+@inherits MementoMori.BlazorShared.Models.AccountComponent
+@page "/Character"
+
+<PageTitle>@Masters.TextResourceTable.Get("[CommonFooterCharacterButtonLabel]")</PageTitle>
+@if (!string.IsNullOrEmpty(alertMessage))
+{
+    <MudAlert Severity="Severity.Warning">@alertMessage</MudAlert>
+}
+<MudGrid>
+    @if (_selectedCharactor != null)
+    {
+        var cmb = Masters.CharacterTable.GetById(_selectedCharactor.CharacterId);
+        var name = Masters.TextResourceTable.Get(cmb.NameKey);
+
+        <MudItem sm="12" md="4">
+            <MudTabs MinimumTabWidth="20px" HeaderPosition="TabHeaderPosition.Before">
+                <Header>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                        <MudText Style="min-width: 100px">@name</MudText>
+                    </MudStack>
+                </Header>
+                <ChildContent>
+                    <MudTabPanel Text="@Masters.TextResourceTable.Get("[CommonHeaderCharacterDetailLabel]")">
+                        <MudField Label="@(Masters.TextResourceTable.Get("[CommonBattlePowerLabel]"))" Variant="Variant.Outlined">
+                            @{
+                                var battlePower = BattlePowerCalculatorUtil.GetUserCharacterBattlePower(ViewModel.UserId, _selectedCharactor);
+                            }
+                            <MudText>@battlePower</MudText>
+                        </MudField>
+                        <MudField Label="@(Masters.TextResourceTable.Get("[CommonPotentialParameterLabel]"))" Variant="Variant.Outlined">
+                            <MudStack Class="d-flex gap-1 flex-wrap" Row="true">
+                                @foreach (var type in EnumUtil.GetValueList<BaseParameterType>())
+                                {
+                                    var name = Masters.TextResourceTable.Get(type);
+                                    var value = _baseParameter.GetValue(type);
+                                    <MudField Label="@name" Style="min-width: 60px">
+                                        @(value.ToString("N0"))
+                                    </MudField>
+                                }
+                            </MudStack>
+                        </MudField>
+                        <MudField Label="@(Masters.TextResourceTable.Get("[CommonStatusLabel]"))" Variant="Variant.Outlined">
+                            <MudStack Class="d-flex gap-1 flex-wrap" Row="true">
+                                @foreach (var type in EnumUtil.GetValueList<BattleParameterType>())
+                                {
+                                    var name = Masters.TextResourceTable.Get(type);
+                                    var value = _battleParameter.GetParameter(type);
+                                    <MudField Label="@name" Style="min-width: 90px">
+                                        @(value.ToString("N0"))
+                                    </MudField>
+                                }
+                            </MudStack>
+                        </MudField>
+                    </MudTabPanel>
+                    <MudTabPanel Text="@Masters.TextResourceTable.Get("[CommonEquipmentLabel]")">
+                        <MudTabs MinimumTabWidth="20" Style="max-width: 100%">
+                            @foreach (var (slotType, equipmentDtoInfo) in ViewModel.UserSyncData.GetUserEquipmentDtoInfoSlotTypeDictionaryByCharacterGuid(_selectedCharactor.Guid))
+                            {
+                                var slotName = Masters.TextResourceTable.Get(slotType);
+                                if (equipmentDtoInfo == null)
+                                {
+                                    <MudTabPanel Text="@slotName">
+                                        <MudText>@Masters.TextResourceTable.Get("[CommonNotEquippingLabel]")</MudText>
+                                    </MudTabPanel>
+                                    continue;
+                                }
+
+                                var equipmentMb = Masters.EquipmentTable.GetById(equipmentDtoInfo.EquipmentId);
+                                var changedSetEquipmentCount = ViewModel.UserSyncData.GetChangedSetEquipmentCount(_selectedCharactor.Guid, equipmentMb.EquipmentSetId, slotType);
+
+                                <MudTabPanel Text="@slotName">
+                                    <EquipmentInfo EquipmentDtoInfo="equipmentDtoInfo" ChangedSetEquipmentCount="changedSetEquipmentCount"></EquipmentInfo>
+                                </MudTabPanel>
+                            }
+                        </MudTabs>
+                    </MudTabPanel>
+                    @* <MudTabPanel Text="详细"></MudTabPanel> *@
+                </ChildContent>
+            </MudTabs>
+        </MudItem>
+    }
+    <MudItem sm="12" md="8">
+        <MudPaper Class="d-flex gap-2 flex-wrap" Elevation="0">
+            @foreach (var character in (_userSyncData?.UserCharacterDtoInfos ?? new List<UserCharacterDtoInfo>()).OrderByDescending(d => d.RarityFlags))
+            {
+                <MudPaper Elevation="0" Width="72px" Height="72px" @onclick="() => SelectCharacter(character)" Style="cursor: pointer">
+                    <CharacterIcon Size="72" UserCharacterInfo="@Funcs.UserSyncData.GetUserCharacterInfoByUserCharacterDtoInfo(character)"/>
+                </MudPaper>
+            }
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private UserSyncData? _userSyncData;
+    private BaseParameter _baseParameter;
+    private BattleParameter _battleParameter;
+    private UserCharacterDtoInfo _selectedCharactor;
+    private MementoMoriFuncs ViewModel;
+    string alertMessage = "";
+
+    protected override async Task AccountChanged()
+    {
+        try
+        {
+            alertMessage = Funcs.LoginOk ? string.Empty : ResourceStrings.PleaseLogin;
+            ViewModel = Funcs;
+            _userSyncData = ViewModel.UserSyncData;
+            SelectCharacter(_userSyncData.UserCharacterDtoInfos?.MaxBy(d => d.Level));
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception e)
+        {
+            alertMessage = e.Message;
+        }
+    }
+
+    private void SelectCharacter(UserCharacterDtoInfo info)
+    {
+        _selectedCharactor = info;
+        if (info != null)
+        {
+            var parameter = BattlePowerCalculatorUtil.CalcCharacterBattleParameter(ViewModel.UserId, info.Guid);
+            _baseParameter = parameter.Item1;
+            _battleParameter = parameter.Item2;
+            alertMessage = string.Empty;
+        }
+    }
+
+}

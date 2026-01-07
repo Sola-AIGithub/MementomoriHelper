@@ -1,0 +1,108 @@
+﻿@inject ISnackbar Snackbar
+@inject IWritableOptions<PlayersOption> PlayersOptions
+@using MementoMori.Option
+@using MementoMori.Ortega.Common.Utils
+@using MementoMori.Ortega.Share
+@using MementoMori.Ortega.Share.Data.Item
+@using MementoMori.Common.Localization
+@using MementoMori.Ortega.Share.Enums
+@using MementoMori.Ortega.Share.Extensions
+@inherits MementoMori.BlazorShared.Models.AccountComponent
+@inject IWritableOptions<GameConfig> WritableGameConfig
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText>@Masters.TextResourceTable.Get("[CommonFooterGachaButtonLabel]") (Global)</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Variant="Variant.Outlined" Size="Size.Small" Icon="@Icons.Material.Filled.Save" OnClick="() => SavePlayerSetting()"></MudIconButton>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudField Label="@ResourceStrings.AutoGachaConsumeItems" Variant="Variant.Outlined">
+            <MudSelect T="UserItem" Label="" MultiSelection="true" Dense="true" Comparer="@(new UserItemComparer())"
+                       @bind-SelectedValues="GachaConfigAutoGachaConsumeUserItems" MultiSelectionTextFunc="list => string.Format(ResourceStrings.SelectedXItems, list.Count)">
+                @foreach (var item in _gachaConsumeItems)
+                {
+                    <MudSelectItem T="UserItem" Value="@item">@ItemUtil.GetItemName(item)</MudSelectItem>
+                }
+            </MudSelect>
+        </MudField>
+        <MudField Label="@($"{Tr("[TradeShopTabName11]")} ({Funcs?.UserSyncData?.UserStatusDtoInfo?.Name})")" Variant="Variant.Outlined">
+            <MudSelect T="GachaRelicType" Label="@Tr("[GachaRelicChangeTitle]")" @bind-Value="_targetRelicType" Dense="true">
+                <MudSelectItem T="GachaRelicType" Value="GachaRelicType.None">None</MudSelectItem>
+                <MudSelectItem T="GachaRelicType" Value="GachaRelicType.ChaliceOfHeavenly">@Tr("[ItemName45]")</MudSelectItem>
+                <MudSelectItem T="GachaRelicType" Value="GachaRelicType.SilverOrderOfTheBlueSky">@Tr("[ItemName46]")</MudSelectItem>
+                <MudSelectItem T="GachaRelicType" Value="GachaRelicType.DivineWingsOfDesire">@Tr("[ItemName47]")</MudSelectItem>
+                <MudSelectItem T="GachaRelicType" Value="GachaRelicType.FruitOfTheGarden">@Tr("[ItemName48]")</MudSelectItem>
+            </MudSelect>
+            <MudSwitch Color="Color.Primary" Label="@ResourceStrings.Auto_draw_10_times__up_to_3_draws_" @bind-Value="_isAutoGacha"></MudSwitch>
+        </MudField>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    IEnumerable<UserItem> GachaConfigAutoGachaConsumeUserItems
+    {
+        get => WritableGameConfig.Value.GachaConfig.AutoGachaConsumeUserItems;
+        set => WritableGameConfig.Update(x => x.GachaConfig.AutoGachaConsumeUserItems = value.ToList());
+    }
+
+    List<UserItem> _gachaConsumeItems =
+    [
+        new UserItem {ItemType = ItemType.FriendPoint, ItemId = 1},
+        new UserItem {ItemType = ItemType.Gold, ItemId = 1},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 1},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 2},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 3},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 4},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 5},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 6},
+        new UserItem {ItemType = ItemType.GachaTicket, ItemId = 7}
+    ];
+
+    GachaRelicType _targetRelicType = GachaRelicType.None;
+
+    bool _isAutoGacha;
+
+    protected override Task AccountChanged()
+    {
+        _targetRelicType = PlayersOptions.Value.TryGetValue(NetworkManager.PlayerId, out var v1) ? v1.GachaConfig.TargetRelicType : GachaRelicType.None;
+        _isAutoGacha = PlayersOptions.Value.TryGetValue(NetworkManager.PlayerId, out var v2) && v2.GachaConfig.AutoGachaRelic;
+        return Task.CompletedTask;
+    }
+
+    private class UserItemComparer : IEqualityComparer<UserItem>
+    {
+        public bool Equals(UserItem? x, UserItem? y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null)) return false;
+            if (ReferenceEquals(y, null)) return false;
+            if (x.GetType() != y.GetType()) return false;
+            return x.ItemId == y.ItemId && x.ItemType == y.ItemType;
+        }
+
+        public int GetHashCode(UserItem obj)
+        {
+            return HashCode.Combine(obj.ItemId, (int) obj.ItemType);
+        }
+    }
+
+    private void SavePlayerSetting()
+    {
+        PlayersOptions.Update(opt =>
+        {
+            var playerOpt = opt.GetOrAdd(NetworkManager.PlayerId, (id) => new PlayerOption() {PlayerId = id});
+            playerOpt.GachaConfig.TargetRelicType = _targetRelicType;
+            playerOpt.GachaConfig.AutoGachaRelic = _isAutoGacha;
+        });
+
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add(ResourceStrings.Save_successful, Severity.Success);
+    }
+
+}

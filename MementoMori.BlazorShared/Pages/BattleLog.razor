@@ -1,0 +1,52 @@
+﻿@using MementoMori.Option
+@using MementoMori.Common.Localization
+@inject IWritableOptions<GameConfig> GameConfig
+@page "/battlelog"
+@inject IJSRuntime JS
+@inject IDialogService DialogService
+@inject IFileSaver FileSaver
+
+<MudText Typo="Typo.h6">
+    @ResourceStrings.You_can_download_the_battle_log_and_parse_it_here: <MudLink Href="https://mentemori.icu/battle_log.html" Target="_blank">Battle Log Viewer</MudLink>
+</MudText>
+
+<MudStack Row="true" Class="justify-start ">
+    <MudSelect @bind-Value="_selectedCleanRange" Label="@ResourceStrings.BattleLogCleanRange" Dense="true" Style="width: 120px;">
+        <MudSelectItem Value="1">@ResourceStrings.BattleLogCleanOption1Day</MudSelectItem>
+        <MudSelectItem Value="7">@ResourceStrings.BattleLogCleanOption1Week</MudSelectItem>
+        <MudSelectItem Value="30">@ResourceStrings.BattleLogCleanOption1Month</MudSelectItem>
+        <MudSelectItem Value="0">@ResourceStrings.BattleLogCleanOptionAll</MudSelectItem>
+    </MudSelect>
+    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Variant="Variant.Outlined"
+                   OnClick="CleanBattleLogs" Color="Color.Error"></MudIconButton>
+</MudStack>
+
+<MudStack Row="true" Class="justify-start align-center">
+    <MudIconButton Icon="@Icons.Material.Filled.Pageview" Size="Size.Small" Variant="Variant.Outlined" OnClick="() => ViewBattleLog(SelectedBattleResult)"></MudIconButton>
+    <MudIconButton Icon="@Icons.Material.Filled.Download" Size="Size.Small" Variant="Variant.Outlined" OnClick="() => DownloadBattleLog(SelectedBattleResult)"></MudIconButton>
+    <MudSelect Label="Battle Type" T="BattleLogType" @bind-Value="selectedBattleLogType" Dense="true">
+        @foreach (BattleLogType battleLogType in Enum.GetValues(typeof(BattleLogType)))
+        {
+            <MudSelectItem Value="battleLogType">
+                <MudText Inline="true">@battleLogType</MudText>
+            </MudSelectItem>
+        }
+    </MudSelect>
+    <MudSelect Label="Log file" @bind-Value="SelectedBattleResult" Dense="true">
+        @foreach (var filename in BattleResults)
+        {
+            <MudSelectItem Value="filename">
+                <MudText Inline="true">@filename</MudText>
+            </MudSelectItem>
+        }
+    </MudSelect>
+</MudStack>
+
+<iframe id="log_viewer" src="https://mentemori.icu/battle_log.html"></iframe>
+<style>
+    #log_viewer {
+        width: 100%;
+        height: 800px;
+        border: none;
+    }
+</style>

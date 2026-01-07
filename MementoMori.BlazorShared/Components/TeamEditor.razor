@@ -1,0 +1,107 @@
+﻿@using MementoMori.Ortega.Common.Utils
+@using MementoMori.Ortega.Custom
+@using MementoMori.Ortega.Share
+@using MementoMori.Ortega.Share.Data.DtoInfo
+@using MementoMori.Ortega.Share.Enums
+@using MementoMori.Ortega.Share.Utils
+@using MementoMori.WebUI.UI
+@inherits MementoMori.BlazorShared.Models.AccountComponent
+@inject AtlasManager AtlasManager
+
+<MudPaper>
+    <MudStack>
+        <MudPaper Class="d-flex flex-wrap">
+            @foreach (var (item, sphere) in Funcs.UserSyncData.GetSpheres().Where(d => d.Item2.IsAttackType))
+            {
+                var (key, value) = ParameterUtil.GetBaseOrBattleParameterChangeText(sphere.BattleParameterChangeInfo, sphere.BaseParameterChangeInfo);
+                <MudPaper Height="48px" Width="100px" Class="d-flex my-1" Elevation="0">
+                    <SphereIcon Size="48" SphereMb="sphere" Count="item.ItemCount"></SphereIcon>
+                    <span class="pl-1 align-self-center" style="line-height:16px">
+                        @key <br/> @value
+                    </span>
+                </MudPaper>
+            }
+        </MudPaper>
+        <MudPaper Class="d-flex flex-wrap">
+            @foreach (var (item, sphere) in Funcs.UserSyncData.GetSpheres().Where(d => !d.Item2.IsAttackType))
+            {
+                var (key, value) = ParameterUtil.GetBaseOrBattleParameterChangeText(sphere.BattleParameterChangeInfo, sphere.BaseParameterChangeInfo);
+                <MudPaper Height="48px" Width="100px" Class="d-flex my-1" Elevation="0">
+                    <SphereIcon Size="48" SphereMb="sphere" Count="item.ItemCount"></SphereIcon>
+                    <span class="pl-1 align-self-center" style="line-height:16px">
+                        @key <br/> @value
+                    </span>
+                </MudPaper>
+            }
+        </MudPaper>
+    </MudStack>
+
+    <MudCard>
+        <MudGrid>
+            <MudItem xs="6">
+                <MudList T="UserCharacterDtoInfo">
+                    <MudListItem T="UserCharacterDtoInfo">
+                        @foreach (var characterDto in UserCharacterDtoInfos)
+                        {
+                            var characterIcon = AtlasManager.GetCharacterIcon(characterDto.CharacterId);
+                            var (baseParameter, battleParameter) = BattlePowerCalculatorUtil.CalcCharacterBattleParameter(AccountInfo.UserId, characterDto.Guid);
+
+                            <MudCard>
+                                <MudStack>
+                                    <MudStack Row="true">
+                                        <MudImage Src="@characterIcon" ObjectFit="ObjectFit.Contain"></MudImage>
+                                        <MudPaper>
+                                            <MudStack Spacing="0" Row="true" Class="flex-wrap">
+                                                @foreach (var type in EnumUtil.GetValueList<BaseParameterType>())
+                                                {
+                                                    var name = Tr(type);
+                                                    var value = baseParameter.GetValue(type);
+                                                    <MudField Label="@name" Style="min-width: 60px" InnerPadding="false">
+                                                        @(value.ToString("N0"))
+                                                    </MudField>
+                                                }
+                                                @foreach (var type in EnumUtil.GetValueList<BattleParameterType>())
+                                                {
+                                                    var name = Tr(type);
+                                                    var value = battleParameter.GetParameter(type);
+                                                    <MudField Label="@name" Style="min-width: 60px" InnerPadding="false">
+                                                        @(value.ToString("N0"))
+                                                    </MudField>
+                                                }
+                                            </MudStack>
+                                        </MudPaper>
+                                    </MudStack>
+                                    <MudPaper>
+                                        <MudStack Row="true" Spacing="1">
+                                            @foreach (var (slotType, equipment) in Funcs.UserSyncData.GetUserEquipmentDtoInfoSlotTypeDictionaryByCharacterGuid(characterDto.Guid))
+                                            {
+                                                var equipmentMb = Masters.EquipmentTable.GetById(equipment.EquipmentId);
+                                                var changedSetEquipmentCount = Funcs.UserSyncData.GetChangedSetEquipmentCount(equipment.CharacterGuid, equipmentMb.EquipmentSetId, slotType);
+                                                <EquipmentInfo EquipmentDtoInfo="equipment" ChangedSetEquipmentCount="changedSetEquipmentCount" MiniMode="true"/>
+                                            }
+                                        </MudStack>
+                                    </MudPaper>
+                                </MudStack>
+                            </MudCard>
+                        }
+
+
+                    </MudListItem>
+                </MudList>
+            </MudItem>
+            <MudItem xs="6"></MudItem>
+        </MudGrid>
+    </MudCard>
+
+</MudPaper>
+
+@code {
+    List<UserCharacterDtoInfo> UserCharacterDtoInfos { get; set; }
+
+    protected override Task AccountChanged()
+    {
+        UserCharacterDtoInfos = Funcs.UserSyncData.GetDeckUserCharacterDtoInfos(DeckUseContentType.Boss);
+        return Task.CompletedTask;
+    }
+
+}

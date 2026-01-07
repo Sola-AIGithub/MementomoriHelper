@@ -1,0 +1,484 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="AutoBossErrorMessage" xml:space="preserve">
+        <value>에러가 {0}번 발생하여 중단됨</value>
+    </data>
+    <data name="AutoBossExecMessage" xml:space="preserve">
+        <value>{0} 보스에 도전 1회: {1}, 총 시도 횟수: {2}, 승리 횟수: {3}, 오류: {4}</value>
+    </data>
+    <data name="AutoLegendInheritance" xml:space="preserve">
+        <value>자동으로 성스러운 장비를 D 등급으로 계승합니다</value>
+    </data>
+    <data name="AutoMatchlessInheritance" xml:space="preserve">
+        <value>SABC 등급을 자동으로 정제하고 D 등급으로 마법 장비를 계승합니다</value>
+    </data>
+    <data name="AutoTowerElementExecMsg" xml:space="preserve">
+        <value>{0} {1} 층에 도전 1회: {2}, {6}/10, 총 시도 횟수: {3}, 승리 횟수: {4}, 오류: {5}</value>
+    </data>
+    <data name="AutoTowerInfiniteExecMsg" xml:space="preserve">
+        <value>{0} {1} 층에 도전 1회: {2}, 총 시도 횟수: {3}, 승리 횟수: {4}, 오류: {5}</value>
+    </data>
+    <data name="BattleResult" xml:space="preserve">
+        <value>전투 결과</value>
+    </data>
+    <data name="CaveBuyItemSuccess" xml:space="preserve">
+        <value>{0}×{1} 구매 성공</value>
+    </data>
+    <data name="CaveCurrentState" xml:space="preserve">
+        <value>현재 {0} 층, 좌표 {1},{2}, 상태 {3}, {4}, 적 전투력 {5}</value>
+    </data>
+    <data name="CaveErrorRelicExist" xml:space="preserve">
+        <value>다음 선택</value>
+    </data>
+    <data name="CaveErrorSelectSupport" xml:space="preserve">
+        <value>서포트 선택 시 오류 발생, {0}, 다음 서포트 선택 계속</value>
+    </data>
+    <data name="CharacterInfo" xml:space="preserve">
+        <value>캐릭터 정보</value>
+    </data>
+    <data name="DesignatedTargetProp" xml:space="preserve">
+        <value>대상 아이템을 지정</value>
+    </data>
+    <data name="Dispatched" xml:space="preserve">
+        <value>배치 완료</value>
+    </data>
+    <data name="DispatchingAll" xml:space="preserve">
+        <value>대상 아이템이 지정되지 않았거나 강제로 모든 작업이 배치됨</value>
+    </data>
+    <data name="DispatchingTargetPropMission" xml:space="preserve">
+        <value>대상 아이템 작업을 배치하는 중</value>
+    </data>
+    <data name="Enter" xml:space="preserve">
+        <value>입장</value>
+    </data>
+    <data name="ExecuteAllQuick" xml:space="preserve">
+        <value>일괄 실행</value>
+    </data>
+    <data name="ExecutionOutput" xml:space="preserve">
+        <value>실행 출력</value>
+    </data>
+    <data name="FindEquipmentCharacter" xml:space="preserve">
+        <value>장비를 착용할 수 있는 캐릭터를 찾아서 1회 벗기십시오</value>
+    </data>
+    <data name="Finished" xml:space="preserve">
+        <value>완료됨</value>
+    </data>
+    <data name="ForceDispatch" xml:space="preserve">
+        <value>강제 배치</value>
+    </data>
+    <data name="GachaExecInfo" xml:space="preserve">
+        <value>가챠 {0} {1}회, {2}×{3} 소비</value>
+    </data>
+    <data name="GachaResult" xml:space="preserve">
+        <value>가챠 결과</value>
+    </data>
+    <data name="GameAssistant" xml:space="preserve">
+        <value>게임 어시스턴트</value>
+    </data>
+    <data name="ItemLimitCount" xml:space="preserve">
+        <value>보유한 한도</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>로그인</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>이름</value>
+    </data>
+    <data name="NoAvailable" xml:space="preserve">
+        <value>{0}을(를) 사용할 수 없음</value>
+    </data>
+    <data name="NoAvailableGacha" xml:space="preserve">
+        <value>더 이상 실행할 수 있는 가챠가 없습니다</value>
+    </data>
+    <data name="NoInheritableDRarityEquip" xml:space="preserve">
+        <value>더 이상 계승할 D 등급 장비가 없습니다</value>
+    </data>
+    <data name="NoLegendEquip" xml:space="preserve">
+        <value>더 이상 성스러운 장비가 없습니다</value>
+    </data>
+    <data name="NothingToReceive" xml:space="preserve">
+        <value>수령 가능한 것이 없습니다</value>
+    </data>
+    <data name="NothingToSmelt" xml:space="preserve">
+        <value>더 이상 정제할 장비가 없습니다</value>
+    </data>
+    <data name="NotReceived" xml:space="preserve">
+        <value>수령 대기</value>
+    </data>
+    <data name="NotSelected" xml:space="preserve">
+        <value>선택되지 않음</value>
+    </data>
+    <data name="NotStarted" xml:space="preserve">
+        <value>시작하지 않음</value>
+    </data>
+    <data name="NotUnlocked" xml:space="preserve">
+        <value>해제되지 않음</value>
+    </data>
+    <data name="OnGoing" xml:space="preserve">
+        <value>진행 중</value>
+    </data>
+    <data name="PleaseLogin" xml:space="preserve">
+        <value>어시스턴트를 사용하기 전에 로그인하십시오</value>
+    </data>
+    <data name="PutOnEquipmentOfCharacter" xml:space="preserve">
+        <value>{0} Lv{1} 장비를 착용합니다</value>
+    </data>
+    <data name="QuickActions" xml:space="preserve">
+        <value>빠른 작업</value>
+    </data>
+    <data name="Received" xml:space="preserve">
+        <value>받음</value>
+    </data>
+    <data name="ReinforceEquipmentOnce" xml:space="preserve">
+        <value>장비 1회 강화</value>
+    </data>
+    <data name="RemoveEquipmentOfCharacter" xml:space="preserve">
+        <value>{0} Lv{1} 장비를 제거합니다</value>
+    </data>
+    <data name="RewardMissionMsg" xml:space="preserve">
+        <value>{0}의 {1} 보상을 수령합니다</value>
+    </data>
+    <data name="RewardMissonActivity" xml:space="preserve">
+        <value>메달 보상</value>
+    </data>
+    <data name="Selected" xml:space="preserve">
+        <value>선택된 상태</value>
+    </data>
+    <data name="SelectPlayer" xml:space="preserve">
+        <value>캐릭터 선택</value>
+    </data>
+    <data name="Slot" xml:space="preserve">
+        <value>슬롯</value>
+    </data>
+    <data name="Success" xml:space="preserve">
+        <value>성공</value>
+    </data>
+    <data name="Sync" xml:space="preserve">
+        <value>동기화</value>
+    </data>
+    <data name="SyncUserInfo" xml:space="preserve">
+        <value>사용자 정보 동기화</value>
+    </data>
+    <data name="TargetValue" xml:space="preserve">
+        <value>목표 값</value>
+    </data>
+    <data name="TowerType" xml:space="preserve">
+        <value>타워 유형</value>
+    </data>
+    <data name="Unknown" xml:space="preserve">
+        <value>알 수 없음</value>
+    </data>
+    <data name="UseNormalItems" xml:space="preserve">
+        <value>고정 아이템 사용</value>
+    </data>
+    <data name="UseOverLimitItem" xml:space="preserve">
+        <value>사용 제한에 도달한 아이템</value>
+    </data>
+    <data name="AutoJobSwitchs" xml:space="preserve">
+    <value>자동 작업 스위치</value>
+</data>
+    <data name="AutoJobCrons" xml:space="preserve">
+    <value>자동 작업 크론</value>
+</data>
+    <data name="DisableAllJobs" xml:space="preserve">
+    <value>모든 작업 비활성화</value>
+</data>
+    <data name="AutoGacha" xml:space="preserve">
+    <value>자동 가챠</value>
+</data>
+    <data name="DailyJobCronExpression" xml:space="preserve">
+    <value>매일 작업 크론 표현</value>
+</data>
+    <data name="RewardClaimJobCronExpression" xml:space="preserve">
+    <value>보상 청구 작업 크론 표현</value>
+</data>
+    <data name="CronExpression" xml:space="preserve">
+    <value>크론 표현</value>
+</data>
+    <data name="AutoGachaConsumeItems" xml:space="preserve">
+    <value>자동 가챠 소비 아이템</value>
+</data>
+    <data name="BountyQuestTargetItems" xml:space="preserve">
+        <value>다음 보상이 제공될 때 자동으로 작업을 배치</value>
+    </data>
+    <data name="DungeonBattleTargetItems" xml:space="preserve">
+        <value>가게에서 자동으로 구매해야 하는 항목</value>
+    </data>
+    <data name="Others" xml:space="preserve">
+    <value>기타</value>
+</data>
+    <data name="SelectedXItems" xml:space="preserve">
+        <value>{0}개 항목 선택됨</value>
+    </data>
+    <data name="AutoRequestDelay" xml:space="preserve">
+        <value>자동 요청 지연</value>
+    </data>
+    <data name="PreferTreasureChest" xml:space="preserve">
+        <value>보물 상자 노드를 우선 선택</value>
+    </data>
+    <data name="MaxUseRecoveryItem" xml:space="preserve">
+        <value>회복 아이템 최대 사용 수량 (0은 사용하지 않음을 의미합니다)</value>
+    </data>
+    <data name="DiscountPercentageforProducts" xml:space="preserve">
+        <value>상품 할인 비율</value>
+    </data>
+    <data name="DailyJob" xml:space="preserve">
+        <value>매일 미션</value>
+    </data>
+    <data name="RewardClaimJob" xml:space="preserve">
+        <value>보상 청구 작업</value>
+    </data>
+    <data name="NextExecutionTime" xml:space="preserve">
+        <value>다음 실행 시간</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>추가</value>
+    </data>
+    <data name="ShopAutoBuyItems" xml:space="preserve">
+        <value>자동으로 상점 아이템 구매</value>
+    </data>
+    <data name="AutoBuy" xml:space="preserve">
+        <value>자동 구매</value>
+    </data>
+    <data name="ConsumeItem" xml:space="preserve">
+        <value>소비 물품</value>
+    </data>
+    <data name="ShopAutoBuyPleaseSelectOne" xml:space="preserve">
+        <value>최소한 하나를 지정하세요: 상점 아이템 또는 소비품</value>
+    </data>
+    <data name="AnyItems" xml:space="preserve">
+        <value>임의의 항목</value>
+    </data>
+    <data name="BuyWith" xml:space="preserve">
+        <value>{0}로 {1}을 구입</value>
+    </data>
+    <data name="ResettoDefault" xml:space="preserve">
+        <value>기본값으로 재설정</value>
+    </data>
+    <data name="AutoLoginonStartup" xml:space="preserve">
+        <value>시작 시 자동 로그인"</value>
+    </data>
+    <data name="StopAfterSpecifiedStage" xml:space="preserve">
+        <value>지정 스테이지 이후 중지</value>
+    </data>
+    <data name="NoStop" xml:space="preserve">
+        <value>중지하지 않음</value>
+    </data>
+    <data name="MainAccount" xml:space="preserve">
+        <value>주 계정</value>
+    </data>
+    <data name="SwitchAccount" xml:space="preserve">
+        <value>계정 전환</value>
+    </data>
+    <data name="AccountManagement" xml:space="preserve">
+        <value>계정 관리</value>
+    </data>
+    <data name="NotLoggedIn" xml:space="preserve">
+        <value>로그인되지 않음</value>
+    </data>
+    <data name="LoggedIn" xml:space="preserve">
+        <value>로그인 완료</value>
+    </data>
+    <data name="AutoLogin" xml:space="preserve">
+        <value>자동 로그인</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>설정</value>
+    </data>
+    <data name="Exit" xml:space="preserve">
+        <value>종료</value>
+    </data>
+    <data name="Account" xml:space="preserve">
+        <value>계정</value>
+    </data>
+    <data name="Password" xml:space="preserve">
+        <value>비밀번호</value>
+    </data>
+    <data name="Failed to retrieve account information" xml:space="preserve">
+        <value>계정 정보 가져오기 실패</value>
+    </data>
+    <data name="Login successful" xml:space="preserve">
+        <value>로그인 성공</value>
+    </data>
+    <data name="Logout successful" xml:space="preserve">
+        <value>로그아웃 성공</value>
+    </data>
+    <data name="Save successful" xml:space="preserve">
+        <value>저장 성공</value>
+    </data>
+    <data name="Downloading master directory..." xml:space="preserve">
+        <value>마스터 디렉토리 다운로드 중...</value>
+    </data>
+    <data name="Download master directory completed" xml:space="preserve">
+        <value>마스터 디렉토리 다운로드가 완료되었습니다</value>
+    </data>
+    <data name="Login expired, please log in again" xml:space="preserve">
+        <value>로그인이 만료되었습니다. 다시 로그인해 주세요</value>
+    </data>
+    <data name="Login failed, please check your account configuration" xml:space="preserve">
+        <value>로그인 실패, 계정 구성을 확인하세요</value>
+    </data>
+    <data name="Operation" xml:space="preserve">
+        <value>조작</value>
+    </data>
+    <data name="Request timed out, check your network" xml:space="preserve">
+        <value>요청 시간이 초과되었습니다. 네트워크를 확인하세요.</value>
+    </data>
+    <data name="No available support characters found." xml:space="preserve">
+        <value>사용 가능한 지원 캐릭터를 찾을 수 없습니다.</value>
+    </data>
+    <data name="Select tasks based on reward quantity and weight" xml:space="preserve">
+        <value>보상 수량과 가중치에 따라 작업을 선택합니다</value>
+    </data>
+    <data name="You can download the battle log and parse it here" xml:space="preserve">
+        <value>전투 로그를 다운로드하고 여기에서 분석할 수 있습니다.</value>
+    </data>
+    <data name="No deployable castles available" xml:space="preserve">
+        <value>배치 가능한 성이 없습니다</value>
+    </data>
+    <data name="Successfully deployed" xml:space="preserve">
+        <value>{0}에서 {1}를 성공적으로 배치했습니다</value>
+    </data>
+    <data name="Deploy defense" xml:space="preserve">
+        <value>방어를 배치하십시오</value>
+    </data>
+    <data name="Account Creation Time" xml:space="preserve">
+        <value>계정 생성 시간</value>
+    </data>
+    <data name="Opponent Selection Strategy" xml:space="preserve">
+        <value>상대 선택 전략</value>
+    </data>
+    <data name="Random" xml:space="preserve">
+        <value>무작위</value>
+    </data>
+    <data name="Min Battle Power" xml:space="preserve">
+        <value>최소 전투력</value>
+    </data>
+    <data name="Max Battle Power" xml:space="preserve">
+        <value>최대 전투력</value>
+    </data>
+    <data name="Character Filter" xml:space="preserve">
+        <value>캐릭터 필터</value>
+    </data>
+    <data name="Exclude {0}" xml:space="preserve">
+        <value>제외 {0}</value>
+    </data>
+    <data name="Exclude {battleParameterName} higher than {characterName}" xml:space="preserve">
+        <value>{0} 이(가) {1} 보다 높은 것을 제외</value>
+    </data>
+    <data name="Exclude character" xml:space="preserve">
+        <value>캐릭터 제외</value>
+    </data>
+    <data name="Exclude enemy character with higher stats in the same attribute as ours" xml:space="preserve">
+        <value>적 캐릭터 중 속성이 우리와 동일하면서 스탯이 더 높은 경우 제외합니다</value>
+    </data>
+    <data name="Filtering strategy" xml:space="preserve">
+        <value>필터링 전략</value>
+    </data>
+    <data name="Confirm removal of this account?" xml:space="preserve">
+        <value>이 계정을 삭제하시겠습니까?</value>
+    </data>
+    <data name="AutoUseItemTypeOthers" xml:space="preserve"><value>Others</value></data>
+    <data name="AutoUseItemTypeDiamondBag" xml:space="preserve"><value>다이아 주머니</value></data>
+    <data name="AutoUseItemTypeMysteryRune" xml:space="preserve"><value>미감정 룬</value></data>
+    <data name="AutoUseItemTypeWitchLetterR" xml:space="preserve"><value>마녀의 편지(R)</value></data>
+    <data name="AutoUseItemTypeWitchLetterSr" xml:space="preserve"><value>마녀의 편지(SR)</value></data>
+    <data name="AutoUseItemTypeWitchShard" xml:space="preserve"><value>마녀의 마음 조각</value></data>
+    <data name="AutoUseItemTypePot" xml:space="preserve"><value>항아리</value></data>
+    <data name="AutoUseItemTypeAmphora" xml:space="preserve"><value>큰 항아리</value></data>
+    <data name="AutoUseItemTypeSealedChest" xml:space="preserve"><value>보물상자</value></data>
+    <data name="AutoUseItemTypeWitchLetterGift" xml:space="preserve"><value>마녀의 편지기프트</value></data>
+    <data name="AutoUseItemTypeChestOfChance" xml:space="preserve"><value>운명의 상자</value></data>
+    <data name="BattleLogCleanRange" xml:space="preserve"><value>정리 범위</value></data>
+    <data name="BattleLogCleanConfirm" xml:space="preserve"><value>{0}개의 로그 파일을 정리하시겠습니까? (총 {1})</value></data>
+    <data name="BattleLogNoFilesToClean" xml:space="preserve"><value>정리할 로그 파일이 없습니다</value></data>
+    <data name="BattleLogCleanComplete" xml:space="preserve"><value>{0}개의 로그 파일을 정리했습니다</value></data>
+    <data name="BattleLogCleanError" xml:space="preserve"><value>파일 {0} 삭제 실패: {1}</value></data>
+    <data name="BattleLogCleanOption1Day" xml:space="preserve"><value>1일 전</value></data>
+    <data name="BattleLogCleanOption1Week" xml:space="preserve"><value>1주일 전</value></data>
+    <data name="BattleLogCleanOption1Month" xml:space="preserve"><value>1개월 전</value></data>
+    <data name="BattleLogCleanOptionAll" xml:space="preserve"><value>모두</value></data>
+    <data name="The current version ({0}) is not the latest version ({1}). Click to download the latest version." xml:space="preserve">
+        <value>현재 버전 ({0})은 최신 버전 ({1})이 아닙니다. 최신 버전을 다운로드하려면 클릭하세요.</value>
+    </data>
+    <data name="Exclude player IDs (comma-separated)" xml:space="preserve">
+        <value>플레이어 ID 제외 (쉼표로 구분)</value>
+    </data>
+    <data name="Seconds of pre-battle wait time" xml:space="preserve">
+        <value>전투 전 대기 시간(초)</value>
+    </data>
+    <data name="Auto draw 10 times (up to 3 draws)" xml:space="preserve">
+        <value>자동으로 10회 뽑기 (최대 3회)</value>
+    </data>
+    <data name="Automatically select this world when auto logging in" xml:space="preserve">
+        <value>자동 로그인 시 이 세계를 자동으로 선택합니다</value>
+    </data>
+    <data name="Remove friends inactive for 7 days" xml:space="preserve">
+        <value>7일간 로그인하지 않은 친구 자동 삭제</value>
+    </data>
+    <data name="Auto accept friend requests" xml:space="preserve">
+        <value>친구 신청 자동 수락</value>
+    </data>
+    <data name="Auto send friend requests" xml:space="preserve">
+        <value>자동으로 친구 요청을 보냅니다</value>
+    </data>
+    <data name="Auto remove whitelist" xml:space="preserve">
+        <value>자동으로 제거된 화이트리스트</value>
+    </data>
+    <data name="Auto challenge retry count" xml:space="preserve">
+        <value>자동 도전 재시도 횟수</value>
+    </data>
+    <data name="Auto unequip gear during events" xml:space="preserve">
+        <value>이벤트 시 자동 장비 해제</value>
+    </data>
+    <data name="Set to 0 for any amount" xml:space="preserve">
+        <value>0으로 설정하면 임의의 양이 됩니다</value>
+    </data>
+    <data name="Amount consumed" xml:space="preserve">
+        <value>소모량</value>
+    </data>
+    <data name="Any amount" xml:space="preserve">
+        <value>임의 수량</value>
+    </data>
+    <data name="No setting means buying any item" xml:space="preserve">
+        <value>설정하지 않으면 임의의 아이템을 구매</value>
+    </data>
+    <data name="No setting means using any item for purchase" xml:space="preserve">
+        <value>설정하지 않으면 임의의 아이템으로 구매</value>
+    </data>
+    <data name="The expected diamond value of the current task is now below 20, do not refresh, dispatch directly." xml:space="preserve">
+        <value>현재 작업의 다이아몬드 예상 값이 20 미만이므로, 새로고침 없이 바로 파견합니다.</value>
+    </data>
+    <data name="Refresh limit reached, dispatch directly" xml:space="preserve">
+        <value>새로고침 횟수가 한도에 도달하여, 바로 파견합니다.</value>
+    </data>
+    <data name="Auto refresh diamonds" xml:space="preserve">
+        <value>다이아몬드를 자동으로 새로고침.</value>
+    </data>
+    <data name="Max refresh count" xml:space="preserve">
+        <value>최대 새로고침 횟수.</value>
+    </data>
+    <data name="Enter 0 to disable auto-refresh." xml:space="preserve">
+        <value>자동 새로고침을 비활성화하려면 0을 입력하세요. 각 새로고침은 20 다이아몬드를 소모하며, 기대값이 20을 초과할 때만 새로고침이 실행됩니다. 단일 작업의 경우 8레벨 기대값은 13, 7레벨은 11.6, 6레벨은 9.8, 5레벨은 7.9, 4레벨은 5.7입니다. 4레벨 미만은 자동 새로고침이 비활성화됩니다. 기대값은 자동으로 두 배 보상 이벤트를 계산합니다.</value>
+    </data>
+    <data name="Current expected value: {0}. Today, {1}/{2} auto-refreshes completed. Refreshing now." xml:space="preserve">
+        <value>현재 기대값: {0}. 오늘 {1}/{2}회 자동 새로고침 완료. 지금 새로고침합니다.</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>취소</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>확인</value>
+    </data>
+</root>

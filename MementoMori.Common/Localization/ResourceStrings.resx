@@ -1,0 +1,590 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="SyncUserInfo" xml:space="preserve">
+    <value>Sync User Info</value>
+  </data>
+  <data name="CharacterInfo" xml:space="preserve">
+    <value>Character Info</value>
+  </data>
+  <data name="Sync" xml:space="preserve">
+      <value>Sync</value>
+  </data>
+  <data name="ForceDispatch" xml:space="preserve">
+      <value>Force Dispatch</value>
+  </data>
+  <data name="NotStarted" xml:space="preserve">
+      <value>Not Started</value>
+  </data>
+  <data name="OnGoing" xml:space="preserve">
+      <value>Ongoing</value>
+  </data>
+  <data name="NotReceived" xml:space="preserve">
+      <value>Not Received</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+      <value>Received</value>
+  </data>
+  <data name="RewardMissonActivity" xml:space="preserve">
+      <value>Reward Medal</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+      <value>Quick Actions</value>
+  </data>
+  <data name="ExecuteAllQuick" xml:space="preserve">
+      <value>Execute All Actions</value>
+  </data>
+  <data name="ReinforceEquipmentOnce" xml:space="preserve">
+      <value>Reinforce Equipment Once</value>
+  </data>
+  <data name="UseNormalItems" xml:space="preserve">
+      <value>Use Normal Items</value>
+  </data>
+  <data name="AutoMatchlessInheritance" xml:space="preserve">
+      <value>Auto Matchless Inheritance To D Rarity</value>
+  </data>
+  <data name="AutoLegendInheritance" xml:space="preserve">
+      <value>Auto Legend Inheritance To D Rarity</value>
+  </data>
+  <data name="TowerType" xml:space="preserve">
+      <value>Tower Type</value>
+  </data>
+  <data name="TargetValue" xml:space="preserve">
+      <value>Target Value</value>
+  </data>
+  <data name="PleaseLogin" xml:space="preserve">
+      <value>Please Click Login to Use Assistant</value>
+  </data>
+  <data name="NotUnlocked" xml:space="preserve">
+      <value>Not Unlocked</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+      <value>Finished</value>
+  </data>
+  <data name="ExecutionOutput" xml:space="preserve">
+      <value>Execution Output</value>
+  </data>
+  <data name="SelectPlayer" xml:space="preserve">
+      <value>Select Player</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+      <value>Name</value>
+  </data>
+  <data name="Slot" xml:space="preserve">
+      <value>Slot</value>
+  </data>
+  <data name="ItemLimitCount" xml:space="preserve">
+      <value>Count Limit</value>
+  </data>
+  <data name="GachaResult" xml:space="preserve">
+      <value>Gacha Result</value>
+  </data>
+  <data name="GameAssistant" xml:space="preserve">
+      <value>Game Assistant</value>
+  </data>
+  <data name="RemoveEquipmentOfCharacter" xml:space="preserve">
+      <value>Remove all equips of {0} {1}</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+      <value>Enter</value>
+  </data>
+  <data name="PutOnEquipmentOfCharacter" xml:space="preserve">
+      <value>Put on all equips of {0} {1}</value>
+  </data>
+  <data name="CaveCurrentState" xml:space="preserve">
+      <value>Current at {0} layer，coordinate {1},{2}，state {3}, {4}, enemy battle power {5}</value>
+  </data>
+  <data name="CaveErrorSelectSupport" xml:space="preserve">
+      <value>Error when select support member, {0}, continue to next one</value>
+  </data>
+  <data name="CaveBuyItemSuccess" xml:space="preserve">
+      <value>Buy {0}×{1} Success</value>
+  </data>
+  <data name="CaveErrorRelicExist" xml:space="preserve">
+      <value>Select Next</value>
+  </data>
+  <data name="UseOverLimitItem" xml:space="preserve">
+      <value>Use over limit item</value>
+  </data>
+  <data name="NothingToReceive" xml:space="preserve">
+      <value>Nothing to receive</value>
+  </data>
+  <data name="DesignatedTargetProp" xml:space="preserve">
+      <value>Designated the target prop</value>
+  </data>
+  <data name="DispatchingTargetPropMission" xml:space="preserve">
+      <value>Dispatching the target prop mission</value>
+  </data>
+  <data name="Dispatched" xml:space="preserve">
+      <value>Dispatched</value>
+  </data>
+  <data name="DispatchingAll" xml:space="preserve">
+      <value>Not specified target prop or forced dispatch, dispatching all tasks</value>
+  </data>
+  <data name="NothingToSmelt" xml:space="preserve">
+      <value>There are no more items to smelt</value>
+  </data>
+  <data name="FindEquipmentCharacter" xml:space="preserve">
+      <value>For equipment, find a wearable character, and then unequip once</value>
+  </data>
+  <data name="NoLegendEquip" xml:space="preserve">
+      <value>No Legend Equipments</value>
+  </data>
+  <data name="NoInheritableDRarityEquip" xml:space="preserve">
+      <value>No Inheritable D Rarity Equipments</value>
+  </data>
+  <data name="NoAvailableGacha" xml:space="preserve">
+      <value>No Available Gacha</value>
+  </data>
+  <data name="GachaExecInfo" xml:space="preserve">
+      <value>Gacha {0} {1} times, used {2}×{3}</value>
+  </data>
+  <data name="BattleResult" xml:space="preserve">
+      <value>Battle Result</value>
+  </data>
+  <data name="AutoBossExecMessage" xml:space="preserve">
+      <value>Challenge {0} boss one time：{1},  total：{2}, Success：{3}, Err: {4}</value>
+  </data>
+  <data name="AutoBossErrorMessage" xml:space="preserve">
+      <value>Error count reached {0} times, abort</value>
+  </data>
+  <data name="AutoTowerInfiniteExecMsg" xml:space="preserve">
+      <value>Challenge {0} {1} layer one time：{2},  total：{3}, Success：{4}, Err: {5}</value>
+  </data>
+  <data name="AutoTowerElementExecMsg" xml:space="preserve">
+      <value>Challenge {0} {1} layer one time：{2},  {6}/10,total：{3}, Success：{4}, Err: {5}</value>
+  </data>
+  <data name="NoAvailable" xml:space="preserve">
+      <value>No Available {0}</value>
+  </data>
+  <data name="RewardMissionMsg" xml:space="preserve">
+      <value>Get {0} 's {1} Reward</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+      <value>Selected</value>
+  </data>
+  <data name="NotSelected" xml:space="preserve">
+      <value>Not Selected</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+      <value>Success</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+      <value>Unkonow</value>
+  </data>
+  <data name="AutoJobSwitchs" xml:space="preserve">
+      <value>Auto Job Switchs</value>
+  </data>
+  <data name="AutoJobCrons" xml:space="preserve">
+      <value>Auto Job Crons</value>
+  </data>
+  <data name="DisableAllJobs" xml:space="preserve">
+      <value>Disable All Jobs</value>
+  </data>
+  <data name="AutoGacha" xml:space="preserve">
+      <value>Auto Gacha</value>
+  </data>
+  <data name="DailyJobCronExpression" xml:space="preserve">
+      <value>Daily Job Cron Expression</value>
+  </data>
+  <data name="RewardClaimJobCronExpression" xml:space="preserve">
+      <value>Reward Claim Job Cron Expression</value>
+  </data>
+  <data name="CronExpression" xml:space="preserve">
+      <value>Cron Expression</value>
+  </data>
+  <data name="BountyQuestTargetItems" xml:space="preserve">
+      <value>Automatically dispatch tasks when the following rewards are available</value>
+  </data>
+  <data name="DungeonBattleTargetItems" xml:space="preserve">
+      <value>Items to be automatically purchased from the shop</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+      <value>Others</value>
+  </data>
+  <data name="AutoGachaConsumeItems" xml:space="preserve">
+      <value>Auto Gacha Consume Items</value>
+  </data>
+  <data name="SelectedXItems" xml:space="preserve">
+      <value>Selected {0} Items</value>
+  </data>
+  <data name="AutoRequestDelay" xml:space="preserve">
+      <value>Auto Request Delay</value>
+  </data>
+  <data name="MaxUseRecoveryItem" xml:space="preserve">
+      <value>Maximum use quantity for recovery items (0 means not using)</value>
+  </data>
+  <data name="PreferTreasureChest" xml:space="preserve">
+      <value>Prioritize selecting treasure chest nodes</value>
+  </data>
+  <data name="DiscountPercentageforProducts" xml:space="preserve">
+      <value>Discount Percentage for Products</value>
+  </data>
+  <data name="DailyJob" xml:space="preserve">
+      <value>Daily Job</value>
+  </data>
+  <data name="RewardClaimJob" xml:space="preserve">
+      <value>Reward Claim Job</value>
+  </data>
+  <data name="NextExecutionTime" xml:space="preserve">
+      <value>Next Execution Time</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+      <value>Add</value>
+  </data>
+  <data name="ShopAutoBuyItems" xml:space="preserve">
+      <value>Auto Buy Store Items</value>
+  </data>
+  <data name="AutoBuy" xml:space="preserve">
+      <value>Auto Purchase</value>
+  </data>
+  <data name="ConsumeItem" xml:space="preserve">
+      <value>Consumed Items</value>
+  </data>
+  <data name="ShopAutoBuyPleaseSelectOne" xml:space="preserve">
+      <value>Specify at least one: Store Items or Consumables</value>
+  </data>
+  <data name="AnyItems" xml:space="preserve">
+      <value>Any Items</value>
+  </data>
+  <data name="BuyWith" xml:space="preserve">
+      <value>Buy {1} with {0}</value>
+  </data>
+  <data name="ResettoDefault" xml:space="preserve">
+      <value>Reset to Default</value>
+  </data>
+  <data name="AutoLoginonStartup" xml:space="preserve">
+      <value>Auto Login on Startup</value>
+  </data>
+  <data name="StopAfterSpecifiedStage" xml:space="preserve">
+      <value>Stop after specified stage</value>
+  </data>
+  <data name="NoStop" xml:space="preserve">
+      <value>No stop</value>
+  </data>
+  <data name="MainAccount" xml:space="preserve">
+      <value>Main Account</value>
+  </data>
+  <data name="SwitchAccount" xml:space="preserve">
+      <value>Switch Account</value>
+  </data>
+  <data name="AccountManagement" xml:space="preserve">
+      <value>Account Management</value>
+  </data>
+  <data name="NotLoggedIn" xml:space="preserve">
+      <value>Not Logged In</value>
+  </data>
+  <data name="LoggedIn" xml:space="preserve">
+      <value>Logged In</value>
+  </data>
+  <data name="AutoLogin" xml:space="preserve">
+      <value>Auto Login</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+      <value>Settings</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+      <value>Exit</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+      <value>Account</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+      <value>Password</value>
+  </data>
+  <data name="Failed to retrieve account information" xml:space="preserve">
+      <value>Failed to retrieve account information</value>
+  </data>
+  <data name="Login successful" xml:space="preserve">
+      <value>Login successful</value>
+  </data>
+  <data name="Logout successful" xml:space="preserve">
+      <value>Logout successful</value>
+  </data>
+  <data name="Save successful" xml:space="preserve">
+      <value>Save successful</value>
+  </data>
+  <data name="Downloading master directory..." xml:space="preserve">
+      <value>Downloading master directory...</value>
+  </data>
+  <data name="Download master directory completed" xml:space="preserve">
+      <value>Download master directory completed</value>
+  </data>
+  <data name="Login expired, please log in again" xml:space="preserve">
+      <value>Login expired, please log in again</value>
+  </data>
+  <data name="Login failed, please check your account configuration" xml:space="preserve">
+      <value>Login failed, please check your account configuration</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+      <value>Operation</value>
+  </data>
+  <data name="Request timed out, check your network" xml:space="preserve">
+      <value>Request timed out, check your network.</value>
+  </data>
+  <data name="No available support characters found." xml:space="preserve">
+      <value>No available support characters found.</value>
+  </data>
+  <data name="Select tasks based on reward quantity and weight" xml:space="preserve">
+      <value>Select tasks based on reward quantity and weight</value>
+  </data>
+  <data name="You can download the battle log and parse it here" xml:space="preserve">
+      <value>You can download the battle log and parse it here</value>
+  </data>
+  <data name="No deployable castles available" xml:space="preserve">
+      <value>No deployable castles available</value>
+  </data>
+  <data name="Successfully deployed" xml:space="preserve">
+      <value>Successfully deployed {1} in {0}</value>
+  </data>
+  <data name="Deploy defense" xml:space="preserve">
+      <value>Deploy defense</value>
+  </data>
+  <data name="Account Creation Time" xml:space="preserve">
+      <value>Account Creation Time</value>
+  </data>
+  <data name="Opponent Selection Strategy" xml:space="preserve">
+      <value>Opponent Selection Strategy</value>
+  </data>
+  <data name="Random" xml:space="preserve">
+      <value>Random</value>
+  </data>
+  <data name="Min Battle Power" xml:space="preserve">
+      <value>Min Battle Power</value>
+  </data>
+  <data name="Max Battle Power" xml:space="preserve">
+      <value>Max Battle Power</value>
+  </data>
+  <data name="Character Filter" xml:space="preserve">
+      <value>Character Filter</value>
+  </data>
+  <data name="Exclude {0}" xml:space="preserve">
+      <value>Exclude {0}</value>
+  </data>
+  <data name="Exclude {battleParameterName} higher than {characterName}" xml:space="preserve">
+      <value>Exclude {0} higher than {1}</value>
+  </data>
+  <data name="Exclude character" xml:space="preserve">
+      <value>Exclude character</value>
+  </data>
+  <data name="Exclude enemy character with higher stats in the same attribute as ours" xml:space="preserve">
+      <value>Exclude enemy character with higher stats in the same attribute as ours</value>
+  </data>
+  <data name="Filtering strategy" xml:space="preserve">
+      <value>Filtering strategy</value>
+  </data>
+  <data name="Confirm removal of this account?" xml:space="preserve">
+      <value>Confirm removal of this account?</value>
+  </data>
+  <data name="AutoUseItemTypeOthers" xml:space="preserve"><value>Others</value></data>
+  <data name="AutoUseItemTypeDiamondBag" xml:space="preserve"><value>Diamond Bag</value></data>
+  <data name="AutoUseItemTypeMysteryRune" xml:space="preserve"><value>Mystery Rune</value></data>
+  <data name="BattleLogCleanRange" xml:space="preserve"><value>Clean Range</value></data>
+  <data name="BattleLogCleanConfirm" xml:space="preserve"><value>Confirm to clean {0} log files (total {1})?</value></data>
+  <data name="BattleLogNoFilesToClean" xml:space="preserve"><value>No log files to clean</value></data>
+  <data name="BattleLogCleanComplete" xml:space="preserve"><value>Cleaned {0} log files</value></data>
+  <data name="BattleLogCleanError" xml:space="preserve"><value>Failed to delete file {0}: {1}</value></data>
+  <data name="BattleLogCleanOption1Day" xml:space="preserve"><value>1 day ago</value></data>
+  <data name="BattleLogCleanOption1Week" xml:space="preserve"><value>1 week ago</value></data>
+  <data name="BattleLogCleanOption1Month" xml:space="preserve"><value>1 month ago</value></data>
+  <data name="BattleLogCleanOptionAll" xml:space="preserve"><value>All</value></data>
+  <data name="AutoUseItemTypeWitchLetterR" xml:space="preserve"><value>Witch's Letter(R)</value></data>
+  <data name="AutoUseItemTypeWitchLetterSr" xml:space="preserve"><value>Witch's Letter(SR)</value></data>
+  <data name="AutoUseItemTypeWitchShard" xml:space="preserve"><value>Witch's Shard</value></data>
+  <data name="AutoUseItemTypePot" xml:space="preserve"><value>Pot</value></data>
+  <data name="AutoUseItemTypeAmphora" xml:space="preserve"><value>Amphora</value></data>
+  <data name="AutoUseItemTypeSealedChest" xml:space="preserve"><value>Sealed Chest</value></data>
+  <data name="AutoUseItemTypeWitchLetterGift" xml:space="preserve"><value>Witch's Letter Gift</value></data>
+  <data name="AutoUseItemTypeChestOfChance" xml:space="preserve"><value>Chest of Chance</value></data>
+  <data name="The current version ({0}) is not the latest version ({1}). Click to download the latest version." xml:space="preserve">
+      <value>The current version ({0}) is not the latest version ({1}). Click to download the latest version.</value>
+  </data>
+  <data name="Exclude player IDs (comma-separated)" xml:space="preserve">
+      <value>Exclude player IDs (comma-separated)</value>
+  </data>
+  <data name="Seconds of pre-battle wait time" xml:space="preserve">
+      <value>Seconds of pre-battle wait time</value>
+  </data>
+  <data name="Auto draw 10 times (up to 3 draws)" xml:space="preserve">
+      <value>Auto draw 10 times (up to 3 draws)</value>
+  </data>
+  <data name="Automatically select this world when auto logging in" xml:space="preserve">
+      <value>Automatically select this world when auto logging in</value>
+  </data>
+  <data name="Remove friends inactive for 7 days" xml:space="preserve">
+      <value>Remove friends inactive for 7 days</value>
+  </data>
+  <data name="Auto accept friend requests" xml:space="preserve">
+      <value>Auto accept friend requests</value>
+  </data>
+  <data name="Auto send friend requests" xml:space="preserve">
+      <value>Auto send friend requests</value>
+  </data>
+  <data name="Auto remove whitelist" xml:space="preserve">
+      <value>Auto remove whitelist</value>
+  </data>
+  <data name="Auto challenge retry count" xml:space="preserve">
+      <value>Auto challenge retry count</value>
+  </data>
+  <data name="Auto unequip gear during events" xml:space="preserve">
+      <value>Auto unequip gear during events</value>
+  </data>
+  <data name="Set to 0 for any amount" xml:space="preserve">
+      <value>Set to 0 for any amount</value>
+  </data>
+  <data name="Amount consumed" xml:space="preserve">
+      <value>Amount consumed</value>
+  </data>
+  <data name="Any amount" xml:space="preserve">
+      <value>Any amount</value>
+  </data>
+  <data name="No setting means buying any item" xml:space="preserve">
+      <value>No setting means buying any item</value>
+  </data>
+  <data name="No setting means using any item for purchase" xml:space="preserve">
+      <value>No setting means using any item for purchase</value>
+  </data>
+  <data name="The expected diamond value of the current task is now below 20, do not refresh, dispatch directly." xml:space="preserve">
+      <value>The expected diamond value of the current task is now below 20, do not refresh, dispatch directly.</value>
+  </data>
+  <data name="Refresh limit reached, dispatch directly" xml:space="preserve">
+      <value>Refresh limit reached, dispatch directly</value>
+  </data>
+  <data name="Auto refresh diamonds" xml:space="preserve">
+      <value>Auto-refresh diamonds</value>
+  </data>
+  <data name="Max refresh count" xml:space="preserve">
+      <value>Max refresh count</value>
+  </data>
+  <data name="Enter 0 to disable auto-refresh." xml:space="preserve">
+      <value>Enter 0 to disable auto-refresh. Each refresh costs 20 diamonds and only refreshes if the expected value is greater than 20. For a single task: level 8 has an expected value of 13, level 7 is 11.6, level 6 is 9.8, level 5 is 7.9, and level 4 is 5.7. Auto-refresh is disabled for levels below 4. Expected values automatically account for double reward events.</value>
+  </data>
+  <data name="Current expected value: {0}. Today, {1}/{2} auto-refreshes completed. Refreshing now." xml:space="preserve">
+      <value>Current expected value: {0}. Today, {1}/{2} auto-refreshes completed. Refreshing now.</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+      <value>Cancel</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+      <value>Confirm</value>
+  </data>
+</root>

@@ -1,0 +1,35 @@
+﻿namespace MementoMori.Ortega.Common.Enums;
+
+public enum PurchaseStateType
+{
+    None,
+    Initializing,
+    InitializingError,
+    Ready,
+    Purchasing,
+    ProductError,
+    PurchasingError,
+    Pending,
+    RequestBuyProductWait,
+    RequestSecretBuyProductWait,
+    RequestBuyProductError,
+    Restore,
+    RestoreError,
+    ShowCompleteDialogWait,
+    ShowContractPrivilegeCompleteDialogWait,
+    ShowDeferredDialog,
+    ServiceDisconnect,
+    RequestGetDmmPointWait,
+    RequestGetDmmSubscriptionWait,
+    PurchaseSubscriptionWait,
+    FetchProductWait,
+    WaitingPurchase,
+    RestoreTransactionWait,
+    RequestSelectShopProductWait,
+    RequestCancelShopProductWait,
+    SteamStartPaymentWait,
+    RequestStartStripePaymentWait,
+    PurchaseStripeWait,
+    CancelSessionDialogWait,
+    RecoveryPaidSessionWait
+}

@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Localization\EffectDescResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>EffectDescResource.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Localization\ResourceStrings.Designer.cs">
+        <DependentUpon>ResourceStrings.resx</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Localization\EffectDescResource.ja-jp.resx">
+        <DependentUpon>EffectDescResource.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\EffectDescResource.ko-kr.resx">
+        <DependentUpon>EffectDescResource.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\EffectDescResource.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>EffectDescResource.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\EffectDescResource.zh.resx">
+        <DependentUpon>EffectDescResource.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\ResourceStrings.ja-jp.resx">
+        <DependentUpon>ResourceStrings.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\ResourceStrings.ko-kr.resx">
+        <DependentUpon>ResourceStrings.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\ResourceStrings.zh.resx">
+          <DependentUpon>ResourceStrings.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Localization\ResourceStrings.resx">
+        <SubType>Designer</SubType>
+        <LastGenOutput>ResourceStrings.Designer.cs</LastGenOutput>
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>

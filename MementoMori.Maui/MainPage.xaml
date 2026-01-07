@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MementoMori.Maui"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             x:Class="MementoMori.Maui.MainPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <Grid>
+        <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html" IsVisible="False">
+            <BlazorWebView.RootComponents>
+                <RootComponent Selector="#app" ComponentType="{x:Type local:Routes}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+        <ListView x:Name="LogList" RowHeight="20" SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Label FontSize="12" LineHeight="14" Text="{Binding}" x:DataType="{x:Type system:String}"></Label>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+
+</ContentPage>

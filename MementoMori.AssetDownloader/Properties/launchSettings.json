@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MementoMori.AssetDownloader": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
