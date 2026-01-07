@@ -16,7 +16,6 @@ runtimeinfo.json
 usersyncdata.json
 *.csproj.user
 *.DotSettings.user
-appsettings.user.json
 BattleLogs/
 MementoMori.AssetDownloader/Assets
 MementoMori.AssetDownloader/Assets*
