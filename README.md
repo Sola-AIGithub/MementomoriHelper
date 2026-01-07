@@ -392,10 +392,17 @@ $$Sort=weight\times\frac{N_{start\_{current}}^{lv\_{current}}}{N_{start\_{max}}^
 ```
 
 ## sola修改
+
 MementoMori\Funcs\Common.cs func AddLog 添加log時間戳
+
 MementoMori\Funcs\Equipment.cs func AutoEquipmentTraning 修改適用全套裝備打磨語法
+
 MementoMori\Funcs\LocalRaid.cs func AutoLocalRaid 修改預設權重
+
 MementoMori.BlazorShared\Components\EquipmentTraining.razor 修改MudSelect下拉式選單新增all選項
+
 MementoMori.BlazorShared\Components\Settings\LocalRaidSettings.razor 修改預設顯示權重
+
 MementoMori.WebUI\appsettings.json 修改預設權重
+
 MementoMori\Jobs\TimeZoneAwareJobRegister.cs func NormalizeCron 修改定時任務去秒機制
