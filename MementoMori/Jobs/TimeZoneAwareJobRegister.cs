@@ -77,7 +77,8 @@ public partial class TimeZoneAwareJobRegister
 
     private string NormalizeCron(string cron)
     {
-        return Regex.Replace(cron, @"^[\S]+", "0");
+        // return Regex.Replace(cron, @"^[\S]+", "0");
+        return cron;
     }
 
     private void RemoveJob<T>(IScheduler scheduler, long userId) where T : IJob

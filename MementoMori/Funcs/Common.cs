@@ -161,9 +161,10 @@ public partial class MementoMoriFuncs : ReactiveObject, IDisposable
     private void AddLog(string message)
     {
         Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{_lastPlayerDataInfo?.Name}(Lv{_lastPlayerDataInfo?.PlayerRank})] {message}");
+        var logWithTime = $"[{DateTime.Now:HH:mm:ss}] {message}";
         lock (MesssageList)
         {
-            MesssageList.Insert(0, message);
+            MesssageList.Insert(0, logWithTime);
             if (MesssageList.Count > 100) MesssageList.RemoveAt(MesssageList.Count - 1);
         }
     }

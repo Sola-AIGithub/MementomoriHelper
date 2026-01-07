@@ -17,6 +17,13 @@
         }
     </MudSelect>
     <MudSelect T="string" Label="@TextResourceTable.Get("[CommonEquipmentLabel]")" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" @bind-Value="@Funcs.TrainingEquipmentGuid" Dense="true">
+        @if (_characterEquipments.Any())
+        {
+            var allGuids = string.Join(",", _characterEquipments.Select(e => e.EquipmentGuid));
+            <MudSelectItem T="string" Value="@allGuids">
+                <MudText Color="Color.Primary" Typo="Typo.subtitle2">all</MudText>
+            </MudSelectItem>
+        }
         @foreach (var e in _characterEquipments)
         {
             <MudSelectItem T="string" Value="e.EquipmentGuid">
@@ -43,7 +50,8 @@
         }
     </MudSelect>
     @{
-        var characterEquipment = _characterEquipments.FirstOrDefault(d => d.EquipmentGuid == Funcs.TrainingEquipmentGuid);
+        var currentGuid = Funcs.TrainingEquipmentGuid?.Split(',').FirstOrDefault();
+        var characterEquipment = _characterEquipments.FirstOrDefault(d => d.EquipmentGuid == currentGuid);
         var equipmentMb = EquipmentTable.GetById(characterEquipment?.UserEquipmentDtoInfo.EquipmentId ?? 0);
     }
     <MudSlider T="double" Min="0d" Max="0.6d" @bind-Value="@Funcs.EquipmentTrainingTargetPercent" Step="0.01">
@@ -97,7 +105,14 @@
             }).Where(d => d != null)
             .Where(d => d.CharacterGuid == obj.Guid)
             .OrderBy(d => d.CharacterGuid).ToList() ?? [];
-        Funcs.TrainingEquipmentGuid = _characterEquipments.FirstOrDefault()?.EquipmentGuid;
+        if (_characterEquipments.Any())
+        {
+            Funcs.TrainingEquipmentGuid = string.Join(",", _characterEquipments.Select(e => e.EquipmentGuid));
+        }
+        else
+        {
+            Funcs.TrainingEquipmentGuid = null;
+        }
         Funcs.EquipmentTrainingTargetType = obj.Job switch
         {
             JobFlags.Warrior => BaseParameterType.Muscle,

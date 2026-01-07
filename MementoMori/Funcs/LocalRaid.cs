@@ -20,10 +20,10 @@ public partial class MementoMoriFuncs
                 {
                     rewardItems.AddRange(new[]
                     {
-                        new GameConfig.WeightedItem(ItemType.ExchangePlaceItem, 4, 4), // 符石兑换券
-                        new GameConfig.WeightedItem(ItemType.CharacterTrainingMaterial, 2, 3), // 潜能宝珠
-                        new GameConfig.WeightedItem(ItemType.EquipmentReinforcementItem, 2, 2.5), // 强化秘药
-                        new GameConfig.WeightedItem(ItemType.CharacterTrainingMaterial, 1, 2), // 经验珠
+                        new GameConfig.WeightedItem(ItemType.ExchangePlaceItem, 4, 1000000), // 符石兑换券
+                        new GameConfig.WeightedItem(ItemType.CharacterTrainingMaterial, 2, 100), // 潜能宝珠
+                        new GameConfig.WeightedItem(ItemType.EquipmentReinforcementItem, 2, 10000), // 强化秘药
+                        new GameConfig.WeightedItem(ItemType.CharacterTrainingMaterial, 1, 50), // 经验珠
                         new GameConfig.WeightedItem(ItemType.EquipmentReinforcementItem, 1, 1) // 强化水
                     });
                 }

@@ -8,33 +8,33 @@ public partial class MementoMoriFuncs
     {
         await ExecuteQuickAction(async (log, token) =>
         {
-            var totalCount = 0;
-            while (!token.IsCancellationRequested)
+            var equipmentGuids = TrainingEquipmentGuid.Split(',').Select(g => g.Trim()).Where(g => !string.IsNullOrEmpty(g)).ToList();
+            foreach (var guid in equipmentGuids)
             {
-                // await UserGetUserData();
-                var equipment = UserSyncData.UserEquipmentDtoInfos.First(d => d.Guid == TrainingEquipmentGuid);
-                var equipmentMb = EquipmentTable.GetById(equipment.EquipmentId);
-                var currentParameter = equipment.GetAdditionalParameter(EquipmentTrainingTargetType);
-                var m =
-                    $"{TextResourceTable.Get("[CommonForgedLabel]")} {totalCount}, {TextResourceTable.Get(EquipmentTrainingTargetType)} {currentParameter} ({(double) currentParameter / equipmentMb.AdditionalParameterTotal:P})";
-                log(m);
-                var targetValue = equipmentMb.AdditionalParameterTotal * EquipmentTrainingTargetPercent;
-                switch (EquipmentTrainingTargetType)
+                var totalCount = 0;
+                while (!token.IsCancellationRequested)
                 {
-                    case BaseParameterType.Health when equipment.AdditionalParameterHealth >= targetValue:
-                        return;
-                    case BaseParameterType.Energy when equipment.AdditionalParameterEnergy >= targetValue:
-                        return;
-                    case BaseParameterType.Intelligence when equipment.AdditionalParameterIntelligence >= targetValue:
-                        return;
-                    case BaseParameterType.Muscle when equipment.AdditionalParameterMuscle >= targetValue:
-                        return;
-                }
+                    // await UserGetUserData();
+                    var equipment = UserSyncData.UserEquipmentDtoInfos.First(d => d.Guid == guid);
+                    var equipmentMb = EquipmentTable.GetById(equipment.EquipmentId);
+                    var currentParameter = equipment.GetAdditionalParameter(EquipmentTrainingTargetType);
+                    var m =
+                        $"{TextResourceTable.Get("[CommonForgedLabel]")} {totalCount}, {TextResourceTable.Get(EquipmentTrainingTargetType)} {currentParameter} ({(double) currentParameter / equipmentMb.AdditionalParameterTotal:P})";
+                    log(m);
+                    var targetValue = equipmentMb.AdditionalParameterTotal * EquipmentTrainingTargetPercent;
+                    bool isReached = false;
+                    if (EquipmentTrainingTargetType == BaseParameterType.Health && equipment.AdditionalParameterHealth >= targetValue) isReached = true;
+                    else if (EquipmentTrainingTargetType == BaseParameterType.Energy && equipment.AdditionalParameterEnergy >= targetValue) isReached = true;
+                    else if (EquipmentTrainingTargetType == BaseParameterType.Intelligence && equipment.AdditionalParameterIntelligence >= targetValue) isReached = true;
+                    else if (EquipmentTrainingTargetType == BaseParameterType.Muscle && equipment.AdditionalParameterMuscle >= targetValue) isReached = true;
+                    if (isReached) break;
 
-                var response = await GetResponse<TrainingRequest, TrainingResponse>(new TrainingRequest {EquipmentGuid = TrainingEquipmentGuid, ParameterLockedList = new List<BaseParameterType>()});
-                totalCount++;
-                await Task.Delay(GameConfig.AutoRequestDelay, token);
+                    var response = await GetResponse<TrainingRequest, TrainingResponse>(new TrainingRequest {EquipmentGuid = guid, ParameterLockedList = new List<BaseParameterType>()});
+                    totalCount++;
+                    await Task.Delay(GameConfig.AutoRequestDelay, token);
+                }
             }
+            return;
         });
     }
 
