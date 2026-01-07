@@ -1,6 +1,6 @@
 ﻿[ [Zh](readme.md) | [En](readme.en.md) ]
 
-# MementoMori 游戏助手
+# MementoMori 遊戲小助手
 
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/moonheart/mementomori-helper/publish-dev.yml)](https://github.com/moonheart/mementomori-helper/actions/workflows/publish-dev.yml)
 [![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/moonheart/mementomori-helper)](https://github.com/moonheart/mementomori-helper/releases)
@@ -8,27 +8,25 @@
 [![GitHub all releases](https://img.shields.io/github/downloads/moonheart/mementomori-helper/total)](https://github.com/moonheart/mementomori-helper/releases)
 [![Docker Pulls](https://img.shields.io/docker/pulls/moonheartmoon/mementomori-webui)](https://hub.docker.com/r/moonheartmoon/mementomori-webui/)
 
-施工中 
+[Discord](https://discord.gg/hqARjHJEAr)
 
-[Telegram](https://t.me/+gTRe8AxKxIdkOTg9) [Discord](https://discord.gg/mJ3fWxrypx)
+## **免責聲明**
 
-## **免责声明**
+使用本輔助工具的用戶（以下簡稱「用戶」）請注意以下幾點：
 
-使用本辅助工具的用户（以下简称“用户”）请注意以下几点：
+1.用途限制：本輔助工具僅供個人娛樂和教育目的使用。使用本工具可能違反特定遊戲或應用程式的使用政策，請自行承擔風險。
 
-1. 本辅助工具仅供个人娱乐和教育目的使用。使用本工具可能违反特定游戏或应用的使用政策，请自行承担风险。
+2.責任聲明：開發者（以下簡稱「我們」）不對用戶在遊戲中使用本工具所產生的任何後果負任何法律或道德責任，用戶應自行承擔使用工具可能帶來的風險。
 
-2. 开发者（以下简称“我们”）不对用户在游戏中使用本工具所产生的任何后果负任何法律或道德责任。用户应自行承担使用工具可能带来的风险。
+3.風險提示：用戶需明白遊戲或應用程式的開發者可能會採取措施來檢測並阻止輔助工具的使用，這可能導致用戶的帳戶被封鎖（封號）或受到其他制裁。
 
-3. 用户需明白，游戏或应用的开发者可能会采取措施来检测并阻止辅助工具的使用，这可能导致用户的账户被封禁或受到其他制裁。
+4.合法要求：使用本輔助工具可能違反適用法律，用戶需確保自己的使用遵守所有適用法律和法規。
 
-4. 使用本辅助工具可能违反适用法律。用户需确保自己的使用遵守所有适用法律和法规。
+5.保留權利：我們保留隨時更改或停止本輔助工具的權利，無需提前通知。
 
-5. 我们保留随时更改或停止本辅助工具的权利，无需提前通知。
+通過下載、安裝和使用本輔助工具，用戶表明已詳細閱讀並理解此免責聲明，並同意自行承擔使用本工具所帶來的一切風險。如不同意本聲明的任何部分，請停止使用本輔助工具。
 
-通过下载、安装和使用本辅助工具，用户表明已详细阅读并理解此免责声明，并同意自行承担使用本工具所带来的一切风险。如不同意本声明的任何部分，请停止使用本辅助工具。
-
-## 预览
+## 預覽
 <table>
 <tbody>
 <tr><td> 
@@ -55,29 +53,29 @@
   <tr >
       <td>
 
-- [x] 多账号支持
-    - [x] 账号密码直接登录
-- [ ] 主页
-    - [x] 用户登陆
-    - [x] 领取每日登陆奖励
-    - [x] 领取每日 VIP 礼物
-    - [x] 一键发送/接收友情点
-    - [x] 一键领取礼物箱
-    - [x] 一键领取任务奖励
-    - [x] 一键领取徽章奖励
-    - [x]  一键使用固定物品
-    - [x]  月卡奖励自动领取
-- [ ] 交换商店
-    - [x] 普通物品购买
-    - [x] 符石购买
-    - [x] 自动购买商品
+- [x] 多帳號支援
+    - [x] 帳號引繼碼直接登入
+- [ ] 主頁
+    - [x] 玩家登入
+    - [x] 領取每日登入獎勵
+    - [x] 領取每日 VIP 獎勵
+    - [x] 一鍵發送/接收友情點數
+    - [x] 一鍵領取禮物箱
+    - [x] 一鍵領取任務獎勵
+    - [x] 一鍵領取徽章獎勵
+    - [x] 一鍵使用固定物品
+    - [x] 自動領取月卡獎勵
+- [ ] 商店
+    - [x] 普通物品購買
+    - [x] 符石購買
+    - [x] 自動購買
 - [ ] 角色
-	- [x] 角色列表
-	- [x] 角色属性
-	- [x] 角色装备详细
-	- [ ] 升级
+	- [x] 角色清單
+	- [x] 角色屬性
+	- [x] 角色裝備
+	- [ ] 升級
 	- [ ] 突破
-    - [ ] 编组
+    - [ ] 隊伍編成
 
 </td>
 <td>
