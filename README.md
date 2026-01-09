@@ -1,4 +1,4 @@
-﻿[ [Zh](README.md) | [En](readme.en.md) ]
+[ [Zh](README.md) | [En](readme.en.md) ]
 
 # MementoMori 遊戲小助手
 
@@ -153,7 +153,7 @@
 
 1. 請先下載[Docker](https://www.docker.com/products/docker-desktop/)
 2. 下載本遊戲小助手[完整資料包](https://github.com/Sola-AIGithub/MementomoriHelper/archive/refs/heads/main.zip)並解壓縮
-3. 前往解壓蘇的檔案夾，執行[指令檔](docker-compose.bat)
+3. 前往解壓縮的檔案夾，執行[指令檔](docker-compose.bat)
 4. 首次建立需要較多時間下載資料(約3分鐘，視網路速度而定)
 5. 前往遊戲小助手[網址](http://127.0.0.1:5290/)
    
