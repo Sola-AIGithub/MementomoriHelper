@@ -8,12 +8,26 @@ namespace MementoMori.Funcs;
 
 public partial class MementoMoriFuncs
 {
+    public static readonly Dictionary<int, string> ItemTypeNames = new Dictionary<int, string>
+    {
+        { 3,  "金幣" },
+        { 16, "聖遺物召喚券" },
+        { 23, "友情點數" }
+    };
+
     public async Task FreeGacha()
     {
         await ExecuteQuickAction(async (log, token) =>
         {
             HashSet<long> ignoredButtonId = [];
-            log("開始免費抽卡");
+            var consumeItems = GameConfig.GachaConfig.AutoGachaConsumeUserItems;
+            foreach (var consume in consumeItems)
+            {
+                if (ItemTypeNames.TryGetValue((int) consume.ItemType, out string typeName))
+                {
+                    log($"使用的消耗品: {typeName}");
+                }
+            }
             while (await DoFreeGacha())
             {
             }
@@ -25,13 +39,13 @@ public partial class MementoMoriFuncs
                 var gachaListResponse = await GetResponse<GetListRequest, GetListResponse>(new GetListRequest());
                 foreach (var gachaCaseInfo in gachaListResponse.GachaCaseInfoList)
                 {
+                    var gachaCaseMb = GachaCaseTable.GetById(gachaCaseInfo.GachaCaseId);
                     var userItems = UserSyncData.UserItemDtoInfo.ToList();
-                    var buttonInfo = gachaCaseInfo.GachaButtonInfoList.OrderByDescending(d => d.LotteryCount)
-                        .FirstOrDefault(d => GameConfig.GachaConfig.AutoGachaConsumeUserItems.Exists(consumeUserItem => CheckCount(d, userItems, consumeUserItem.ItemType, consumeUserItem.ItemId)));
+                    var buttonInfo = gachaCaseInfo.GachaButtonInfoList.OrderByDescending(d => d.LotteryCount).FirstOrDefault(d => GameConfig.GachaConfig.AutoGachaConsumeUserItems.Exists(consumeUserItem => CheckCount(d, userItems, consumeUserItem.ItemType, consumeUserItem.ItemId)));
                     if (buttonInfo == null) continue;
                     if (ignoredButtonId.Contains(buttonInfo.GachaButtonId)) continue;
 
-                    var gachaCaseMb = GachaCaseTable.GetById(gachaCaseInfo.GachaCaseId);
+                    log($"正在使用消耗品抽: {gachaCaseMb.Memo}");
                     var itemMb = ItemTable.GetByItemTypeAndItemId(buttonInfo.ConsumeUserItem.ItemType, buttonInfo.ConsumeUserItem.ItemId);
                     var name = TextResourceTable.Get(itemMb.NameKey);
                     log(string.Format(ResourceStrings.GachaExecInfo, gachaCaseMb.Memo, buttonInfo.LotteryCount, name, buttonInfo.ConsumeUserItem.ItemCount));
@@ -95,10 +109,9 @@ public partial class MementoMoriFuncs
     {
         await ExecuteQuickAction(async (log, token) =>
         {
-            log("開始自動抽卡");
             if (!PlayerOption.GachaConfig.AutoGachaRelic)
             {
-                log("未設定自動抽聖遺物和魔水晶");
+                log("未設定自動補抽聖遺物");
                 return;
             }
             var listResponse = await GetResponse<GetListRequest, GetListResponse>(new GetListRequest());
@@ -106,29 +119,30 @@ public partial class MementoMoriFuncs
             if (gachaCaseInfo == null) return;
 
             var gachaCaseMb = GachaCaseTable.GetById(gachaCaseInfo.GachaCaseId);
-            log($"正在抽: {gachaCaseMb.GachaRelicType.GetName()}");
+            log($"正在補抽聖遺物: {gachaCaseMb.Memo}");
 
-            if (gachaCaseInfo.GachaBonusDrawCount >= 100) 
+            if (gachaCaseInfo.GachaBonusDrawCount != 7) 
             {
-                log("已達十抽上限");
+                log("抽取次數已超過或未滿7次!請檢查次數!");
                 return;
             }
 
-            for (var i = 0; i < 3; i++)
+            int totalDrawCount = gachaCaseInfo.GachaBonusDrawCount;
+
+            while (totalDrawCount < 10)
             {
                 var currency = UserSyncData.GetUserItemCount(ItemType.CurrencyFree, isAnyCurrency: true);
                 var gachaButtonInfo = gachaCaseInfo.GachaButtonInfoList.Find(d => d.ConsumeUserItem.IsCurrency() && d.ConsumeUserItem.ItemCount == 300);
                 if (gachaButtonInfo == null) break;
-                log($"按鈕 ID 為: {gachaButtonInfo.GachaButtonId}");
-                if (currency < 300) 
-                {
-                    log("鑽石不足，停止抽卡");
-                    break;
-                }
-
-                //var drawResponse = await GetResponse<DrawRequest, DrawResponse>(new DrawRequest {GachaButtonId = gachaButtonInfo.GachaButtonId});
-                //drawResponse.GachaRewardItemList.PrintUserItems(log);
-                //drawResponse.BonusRewardItemList.PrintUserItems(log);
+                if (currency < 300)
+                    {
+                        log("鑽石不足，停止抽卡");
+                        break;
+                    }
+                var drawResponse = await GetResponse<DrawRequest, DrawResponse>(new DrawRequest {GachaButtonId = gachaButtonInfo.GachaButtonId});
+                drawResponse.GachaRewardItemList.PrintUserItems(log);
+                drawResponse.BonusRewardItemList.PrintUserItems(log);
+                totalDrawCount += 1;
             }
         });
     }
