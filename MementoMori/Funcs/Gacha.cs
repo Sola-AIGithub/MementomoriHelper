@@ -15,6 +15,17 @@ public partial class MementoMoriFuncs
         { 23, "友情點數" }
     };
 
+    public static readonly Dictionary<int, string> TicketNames = new Dictionary<int, string>
+    {
+        { 1, "聖遺物召喚券" },
+        { 2, "白金召喚券" },
+        { 3, "屬性召喚券" },
+        { 4, "命運召喚券" },
+        { 5, "黑葬武具召喚券" },
+        { 6, "天光武具召喚券" },
+        { 7, "禁忌武具召喚券" }
+    };
+
     public async Task FreeGacha()
     {
         await ExecuteQuickAction(async (log, token) =>
@@ -23,9 +34,19 @@ public partial class MementoMoriFuncs
             var consumeItems = GameConfig.GachaConfig.AutoGachaConsumeUserItems;
             foreach (var consume in consumeItems)
             {
-                if (ItemTypeNames.TryGetValue((int) consume.ItemType, out string typeName))
+                int typeKey = (int) consume.ItemType;
+                int idKey = (int) consume.ItemId;
+
+                if (ItemTypeNames.TryGetValue(typeKey, out string typeName))
                 {
-                    log($"使用的消耗品: {typeName}");
+                    if (typeKey == 16 && TicketNames.TryGetValue(idKey, out string detailedName))
+                    {
+                        log($"正在使用的消耗品: {detailedName}");
+                    }
+                    else
+                    {
+                        log($"正在使用的消耗品: {typeName}");
+                    }
                 }
             }
             while (await DoFreeGacha())
