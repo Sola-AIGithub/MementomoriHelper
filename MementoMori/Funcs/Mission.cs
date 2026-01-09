@@ -91,18 +91,35 @@ public partial class MementoMoriFuncs
             await GetMissionInfo();
             foreach (var pair in MissionInfoDict)
             {
-                if (pair.Value.UserMissionActivityDtoInfo == null) continue;
+                if (pair.Value.UserMissionActivityDtoInfo == null)
+                {
+                    log($"{pair.Key} 無獎勵可領取");
+                    continue;
+                }
+
+                log($"{pair.Key} 任務獎勵");
+
+                var activityInfo = pair.Value.UserMissionActivityDtoInfo;
+                var currentMedalCount = activityInfo.ProgressCount;
 
                 foreach (var (rewardId, statusType) in pair.Value.UserMissionActivityDtoInfo.RewardStatusDict)
                 {
                     if (statusType == MissionActivityRewardStatusType.NotReceived)
                     {
                         var rewardMb = TotalActivityMedalRewardTable.GetById(rewardId);
-                        log(string.Format(ResourceStrings.RewardMissionMsg, pair.Key, rewardMb.RequiredActivityMedalCount));
-                        var response = await GetResponse<RewardMissionActivityRequest, RewardMissionActivityResponse>(new RewardMissionActivityRequest
-                            {MissionGroupType = pair.Key, RequiredCount = rewardMb.RequiredActivityMedalCount});
-                        response.RewardInfo.ItemList.PrintUserItems(log);
-                        response.RewardInfo.CharacterList.PrintCharacterDtos(log);
+                        log($"當前勳章: {currentMedalCount}, 需要勳章: {rewardMb.RequiredActivityMedalCount}");
+                        if (currentMedalCount >= rewardMb.RequiredActivityMedalCount)
+                        { 
+                            log(string.Format(ResourceStrings.RewardMissionMsg, pair.Key, rewardMb.RequiredActivityMedalCount));
+                            var response = await GetResponse<RewardMissionActivityRequest, RewardMissionActivityResponse>(new RewardMissionActivityRequest
+                                {MissionGroupType = pair.Key, RequiredCount = rewardMb.RequiredActivityMedalCount});
+                            response.RewardInfo.ItemList.PrintUserItems(log);
+                            response.RewardInfo.CharacterList.PrintCharacterDtos(log);
+                        }
+                        else
+                        {
+                            log($"功勳銀幣不足");
+                        }
                     }
                 }
             }

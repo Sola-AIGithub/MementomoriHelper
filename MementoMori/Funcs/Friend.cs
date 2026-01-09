@@ -18,9 +18,9 @@ public partial class MementoMoriFuncs
                 await GetResponse<BulkTransferFriendPointRequest, BulkTransferFriendPointResponse>(new BulkTransferFriendPointRequest());
                 log($"{TextResourceTable.Get("[ItemName9]")} {TextResourceTable.Get("[BulkReceiveAndSend]")} {ResourceStrings.Finished}");
             }
-            catch (ApiErrorException e) when (e.ErrorCode == ErrorCode.FriendAlreadyMaxReceived)
+            catch (ApiErrorException e) when (e.ErrorCode == ErrorCode.FriendAlreadyMaxReceived || e.Message.Contains("已達持有數量上限") || e.Message.Contains("無法領取友情點數"))
             {
-                log(e.Message);
+                log($"友情點數已達上限,跳過領取");
             }
         });
     }
