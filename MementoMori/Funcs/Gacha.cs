@@ -13,6 +13,7 @@ public partial class MementoMoriFuncs
         await ExecuteQuickAction(async (log, token) =>
         {
             HashSet<long> ignoredButtonId = [];
+            log("開始免費抽卡");
             while (await DoFreeGacha())
             {
             }
@@ -94,28 +95,40 @@ public partial class MementoMoriFuncs
     {
         await ExecuteQuickAction(async (log, token) =>
         {
-            if (!PlayerOption.GachaConfig.AutoGachaRelic) return;
-
+            log("開始自動抽卡");
+            if (!PlayerOption.GachaConfig.AutoGachaRelic)
+            {
+                log("未設定自動抽聖遺物和魔水晶");
+                return;
+            }
             var listResponse = await GetResponse<GetListRequest, GetListResponse>(new GetListRequest());
             var gachaCaseInfo = listResponse.GachaCaseInfoList.Find(d => d.GachaGroupType == GachaGroupType.HolyAngel);
             if (gachaCaseInfo == null) return;
 
-            if (gachaCaseInfo.GachaBonusDrawCount >= 10) return;
-
             var gachaCaseMb = GachaCaseTable.GetById(gachaCaseInfo.GachaCaseId);
-            log(gachaCaseMb.GachaRelicType.GetName());
+            log($"正在抽: {gachaCaseMb.GachaRelicType.GetName()}");
+
+            if (gachaCaseInfo.GachaBonusDrawCount >= 100) 
+            {
+                log("已達十抽上限");
+                return;
+            }
 
             for (var i = 0; i < 3; i++)
             {
                 var currency = UserSyncData.GetUserItemCount(ItemType.CurrencyFree, isAnyCurrency: true);
                 var gachaButtonInfo = gachaCaseInfo.GachaButtonInfoList.Find(d => d.ConsumeUserItem.IsCurrency() && d.ConsumeUserItem.ItemCount == 300);
                 if (gachaButtonInfo == null) break;
+                log($"按鈕 ID 為: {gachaButtonInfo.GachaButtonId}");
+                if (currency < 300) 
+                {
+                    log("鑽石不足，停止抽卡");
+                    break;
+                }
 
-                if (gachaCaseInfo.GachaBonusDrawCount >= 10 || currency < 300) break;
-
-                var drawResponse = await GetResponse<DrawRequest, DrawResponse>(new DrawRequest {GachaButtonId = gachaButtonInfo.GachaButtonId});
-                drawResponse.GachaRewardItemList.PrintUserItems(log);
-                drawResponse.BonusRewardItemList.PrintUserItems(log);
+                //var drawResponse = await GetResponse<DrawRequest, DrawResponse>(new DrawRequest {GachaButtonId = gachaButtonInfo.GachaButtonId});
+                //drawResponse.GachaRewardItemList.PrintUserItems(log);
+                //drawResponse.BonusRewardItemList.PrintUserItems(log);
             }
         });
     }
