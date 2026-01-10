@@ -456,14 +456,24 @@ services:
 
 MementoMori\Funcs\Common.cs func AddLog 添加log時間戳
 
+MementoMori\Funcs\Common.cs func ExecuteAllQuickAction 添加DrawGachaRelic到任務列表
+
 MementoMori\Funcs\Equipment.cs func AutoEquipmentTraning 修改適用全套裝備打磨語法
 
 MementoMori\Funcs\LocalRaid.cs func AutoLocalRaid 修改預設權重
+
+MementoMori\Funcs\Gacha.cs 修改自動抽卡以及免費抽卡提示訊息和自動抽滿10抽聖遺物邏輯
+
+MementoMori\Jobs\TimeZoneAwareJobRegister.cs func NormalizeCron 修改定時任務去秒機制
+
+MementoMori\Funcs\Friend.cs func BulkTransferFriendPoint 修改友情點數報錯訊息
+
+MementoMori\Funcs\Mission.cs func RewardMissonActivity 修改領取獎勵報錯訊息
 
 MementoMori.BlazorShared\Components\EquipmentTraining.razor 修改MudSelect下拉式選單新增all選項
 
 MementoMori.BlazorShared\Components\Settings\LocalRaidSettings.razor 修改預設顯示權重
 
-MementoMori.WebUI\appsettings.json 修改預設權重
+MementoMori.BlazorShared\Components\Settings\AutoJobSwitch.razor 修改顯示自動抽滿聖遺物介面
 
-MementoMori\Jobs\TimeZoneAwareJobRegister.cs func NormalizeCron 修改定時任務去秒機制
+MementoMori.WebUI & MementoMori.Maui\appsettings.json 修改預設權重
