@@ -8,7 +8,7 @@
 [![GitHub all releases](https://img.shields.io/github/downloads/moonheart/mementomori-helper/total)](https://github.com/moonheart/mementomori-helper/releases)
 [![Docker Pulls](https://img.shields.io/docker/pulls/moonheartmoon/mementomori-webui)](https://hub.docker.com/r/moonheartmoon/mementomori-webui/)
 
-[Mem W8  ₊貓淺町⁺⁎· Discord](https://discord.gg/hqARjHJEAr)
+[Mem W8  ₊貓淺町⁺⁎· Discord]()
 
 ---
 
